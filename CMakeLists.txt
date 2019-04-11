@@ -143,8 +143,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 
 add_executable(lidar_info src/lidar_info.cpp)
-add_executable(move src/move.cpp)
-
+add_executable(move_cir src/move_cir.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -155,13 +154,13 @@ add_executable(move src/move.cpp)
 ## same as for the library above
 
 add_dependencies(lidar_info ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(move ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(move_cir ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(lidar_info
    ${catkin_LIBRARIES}
  )
- target_link_libraries(move
+ target_link_libraries(move_cir
    ${catkin_LIBRARIES}
  )
 
