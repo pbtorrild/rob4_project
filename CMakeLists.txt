@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   message_generation
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -114,6 +115,7 @@ catkin_package(
     std_msgs
     message_runtime
     geometry_msgs
+    nav_msgs
 #  DEPENDS system_lib
 )
 
@@ -143,7 +145,9 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 
 add_executable(lidar_info src/lidar_info.cpp)
-add_executable(move_cir src/move_cir.cpp)
+add_executable(emerg_stop src/emerg_stop.cpp)
+add_executable(test src/test.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -154,13 +158,18 @@ add_executable(move_cir src/move_cir.cpp)
 ## same as for the library above
 
 add_dependencies(lidar_info ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(move_cir ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(emerg_stop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+
  target_link_libraries(lidar_info
    ${catkin_LIBRARIES}
  )
- target_link_libraries(move_cir
+ target_link_libraries(emerg_stop
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(test
    ${catkin_LIBRARIES}
  )
 
