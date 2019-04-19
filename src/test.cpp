@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <rob4_project/ClosestObj.h>
-#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/Twist.h>
 class movement{
   public:
     //Class constructor
@@ -14,9 +14,9 @@ class movement{
       float dist_th=0.4;
 
       geometry_msgs::Twist send_data;
-      send_data.linear.x=1;
+      send_data.linear.x=0.1;
 
-      ros::Rate loop_rate(100);
+      ros::Rate loop_rate(1000);
       do {
         pub_.publish(send_data);
         ros::spinOnce();
@@ -28,18 +28,13 @@ class movement{
     }
    private:
      ros::Publisher pub_;
-
-     double x_pos;
-     double y_pos;
-     double z_pos;
-     double w_pos;
 };
 int main(int argc, char**argv){
   //standart ros initialize
   ros::init(argc, argv, "movement_pub");
   ros::NodeHandle nh;
   //define publisher
-  ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("move_base_simple/goal", 100);
+  ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 100);
   //create class instance monitor
   movement monitor(pub);
   //subscribe to the topic closest_object with que size 100 and

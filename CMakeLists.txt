@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   nav_msgs
+  OpenCV
 )
 
 ## System dependencies are found with CMake's conventions
@@ -116,6 +117,7 @@ catkin_package(
     message_runtime
     geometry_msgs
     nav_msgs
+    
 #  DEPENDS system_lib
 )
 
