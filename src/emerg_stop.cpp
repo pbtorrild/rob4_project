@@ -14,7 +14,7 @@ public:
   void emerg_pub(ros::NodeHandle nh,ros::Publisher pub){
     //check for changes in emerg_stop status
     torrilds_package::EmergStop send_data;
-    if(published_emerg_stop!=emerg_stop) {
+    if(published_emerg_stop!=emerg_stop){
       send_data.emerg_stop=emerg_stop;
       pub.publish(send_data);
     }
