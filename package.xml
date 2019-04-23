@@ -40,6 +40,7 @@
 
 
   <exec_depend>hls_lfcd_lds_driver</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
 
 
   <!-- used for msg generation -->
