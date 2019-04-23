@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(rob4_project)
+project(torrilds_package)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -55,6 +55,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    ClosestObj.msg
+   EmergStop.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -117,7 +118,7 @@ catkin_package(
     message_runtime
     geometry_msgs
     nav_msgs
-    
+
 #  DEPENDS system_lib
 )
 

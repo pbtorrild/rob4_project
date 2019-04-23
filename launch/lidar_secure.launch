@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
-    <param name="port" value="/dev/ttyUSB0"/>
-    <param name="frame_id" value="laser"/>
-  </node>
-  <node pkg="rob4_project" type="lidar_info" name="lidar_info" output="screen"></node>
-  <node pkg="rob4_project" type="move" name="move" output="screen"></node>
-</launch>

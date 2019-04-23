@@ -4,6 +4,6 @@
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="frame_id" value="laser"/>
   </node>
-  <node pkg="rob4_project" type="lidar_info" name="lidar_info" output="screen">
-  </node>
+  <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen"></node>
+  <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
 </launch>

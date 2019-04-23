@@ -1,0 +1,1 @@
+bool emerg_stop 
