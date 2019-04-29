@@ -19,7 +19,7 @@ public:
       pub.publish(send_data);
     }
   }
-  //callback:
+  //callback:½½
   void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
     float dist2obj=reseved_data->distance;
     if (dist2obj <= dist_th){

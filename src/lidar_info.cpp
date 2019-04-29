@@ -22,37 +22,33 @@ public:
     //finding coordinates of the input data
     double Range;
     double Angle;
-    double closest_object_dist =range_max;
+    obj_front_dist=range_max;
     double closest_object_angle;
     for (size_t i = 0; i <= ranges_size; i++){
       //Polar coordinates
       Range = msg->ranges[i];
       Angle = (angle_min + (i* angle_increment));
-      /* Just the calculation but takes too much prossesing power
-      //Cartisian coordinates
-      double x = Range*cos(Angle);
-      double y = Range*sin(Angle);
-      //Show data in terminal
-      ROS_INFO("X:  %f | Y:  %f | Range:  %f | theta:  %f",x,y,Range,Angle);
-      */
 
-      //Find closest opbject
-      if(Range<closest_object_dist&&Range>range_min){
-        closest_object_dist=Range;
-        closest_object_angle=Angle;
+      //double x = Range*cos(Angle);
+      double y = Range*sin(Angle);
+
+      //Find closest opbject infront of turtlebot
+      double turtlebot_width=0.195; //m
+
+      if(Range<obj_front_dist&&Range>range_min&&y<turtlebot_width/2 && y>turtlebot_width/2){
+        obj_front_dist=Range;
+        obj_front_dist=Angle;
       }
       //publish the closest opbject
       torrilds_package::ClosestObj send_data;
-      send_data.distance=closest_object_dist;
-      send_data.angle=closest_object_angle;
+      send_data.distance=obj_front_dist;
+      send_data.angle=obj_front_dist;
       closest_object_pub_.publish(send_data);
     }
   }
 private:
   ros::Publisher closest_object_pub_;
 };
-
-
 
 int main(int argc, char **argv)
 {
