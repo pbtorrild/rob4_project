@@ -57,6 +57,9 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    ClosestObj.msg
    EmergStop.msg
+   ObjectPos.msg
+   RoadChange.msg
+   SignsFound.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -148,10 +151,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 
+add_executable(control src/control.cpp)
 add_executable(lidar_info src/lidar_info.cpp)
 add_executable(emerg_stop src/emerg_stop.cpp)
 add_executable(test src/test.cpp)
-add_executable(image src/image.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,10 +165,10 @@ add_executable(image src/image.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 
+add_dependencies(control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(lidar_info ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(emerg_stop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(image ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 
@@ -178,7 +181,7 @@ add_dependencies(image ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TAR
  target_link_libraries(test
    ${catkin_LIBRARIES}
  )
- target_link_libraries(image
+ target_link_libraries(control
    ${catkin_LIBRARIES}
  )
 

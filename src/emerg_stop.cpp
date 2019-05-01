@@ -21,7 +21,7 @@ public:
   }
   //callback:
   void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
-    float dist2obj=reseved_data->distance;
+    float dist2obj=reseved_data->forward_obj.distance;
     if (dist2obj <= dist_th){
       emerg_stop=true;
     }

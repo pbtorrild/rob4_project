@@ -4,6 +4,8 @@
 #include "torrilds_package/ClosestObj.h"
 
 class lidar_info{
+protected:  double turtlebot_width=0.195; //m
+            double pi=3.14159265358979323846;
 public:
   lidar_info(const ros::Publisher& closest_object_pub)
     : closest_object_pub_(closest_object_pub){
@@ -22,33 +24,35 @@ public:
     //finding coordinates of the input data
     double Range;
     double Angle;
-    obj_front_dist=range_max;
-    double closest_object_angle;
+
+    double obj_front_dist =range_max;
+    double obj_front_angle;
     for (size_t i = 0; i <= ranges_size; i++){
       //Polar coordinates
       Range = msg->ranges[i];
       Angle = (angle_min + (i* angle_increment));
 
-      //double x = Range*cos(Angle);
+      //Cartisian coordinates
+      double x = Range*cos(Angle);
       double y = Range*sin(Angle);
 
-      //Find closest opbject infront of turtlebot
-      double turtlebot_width=0.195; //m
-
-      if(Range<obj_front_dist&&Range>range_min&&y<turtlebot_width/2 && y>turtlebot_width/2){
+      //Find closest opbject
+      if(Range<obj_front_dist&&Range>range_min){
         obj_front_dist=Range;
-        obj_front_dist=Angle;
+        obj_front_angle=Angle;
       }
-      //publish the closest opbject
-      torrilds_package::ClosestObj send_data;
-      send_data.distance=obj_front_dist;
-      send_data.angle=obj_front_dist;
-      closest_object_pub_.publish(send_data);
     }
+    //publish the closest opbject
+    torrilds_package::ClosestObj send_data;
+    send_data.forward_obj.distance=obj_front_dist;
+    send_data.forward_obj.angle=obj_front_angle;
+    closest_object_pub_.publish(send_data);
   }
 private:
   ros::Publisher closest_object_pub_;
 };
+
+
 
 int main(int argc, char **argv)
 {

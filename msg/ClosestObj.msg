@@ -1,2 +1,3 @@
-float32 distance  #Distance to neerest opbject
-float32 angle     #Angle from turtlebot to object
+torrilds_package/ObjectPos forward_obj
+
+torrilds_package/ObjectPos backward_obj
