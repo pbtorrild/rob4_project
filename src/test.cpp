@@ -38,7 +38,7 @@ public:
       //Find closest opbject infront of turtlebot
       double turtlebot_width=0.195; //m
 
-      if(Range>range_min&&y<turtlebot_width/2 && y>turtlebot_width/2){
+      if(Range>range_min&&y<turtlebot_width/2 && y>-turtlebot_width/2){
         if (Range<obj_front_dist &&x>0) {
           obj_front_dist=Range;
           obj_front_angle=Angle;
