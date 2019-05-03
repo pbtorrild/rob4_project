@@ -12,10 +12,11 @@ private:
   float dist_th=0.3;
   // vel
   float std_vel =0.5;
+  float speed_up_vel=0.7
 protected:
   //emergcy stop status
   bool emerg_stop=true;
-
+  bool emerg_speed_up=false;
   //sign input
   bool speed70;
   bool stop_sign;
@@ -38,7 +39,10 @@ public:
         /* code  for no signs */
         send_data.linear.x=std_vel;
       }
-
+      //////////////////////////////
+      if (emerg_speed_up=true) {
+        send_data.linear.x=speed_up_vel;
+      }
       //Do the angular change
       send_data.angular.z=rot_vel;
     }

@@ -9,6 +9,8 @@ protected:
   bool emerg_stop=true;
   bool published_emerg_stop=true;
 
+  bool emerg_speed_up=true;
+  bool published_emerg_speed_up;
 public:
   //funcktions below
   void emerg_pub(ros::NodeHandle nh,ros::Publisher pub){
@@ -16,21 +18,32 @@ public:
     torrilds_package::EmergStop send_data;
     if(published_emerg_stop!=emerg_stop){
       send_data.emerg_stop=emerg_stop;
-      pub.publish(send_data);
     }
+    if(published_emerg_stop!=emerg_stop){
+      send_data.emerg_speed_up=emerg_speed_up;
+    }
+    pub.publish(send_data);
   }
   //callback:
   void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
-    float dist2obj=reseved_data->forward_obj.distance;
-    if (dist2obj <= dist_th){
+    float forward_dist=reseved_data->forward_obj.distance;
+    if (forward_dist <= dist_th){
       emerg_stop=true;
     }
     else{
       emerg_stop=false;
     }
+    float back_dist=reseved_data->backward_obj.distance;
+    if (back_dist <= dist_th){
+      emerg_speed_up=true;
+    }
+    else{
+      emerg_speed_up=false;
+    }
   }
   void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
     published_emerg_stop=reseved_data->emerg_stop;
+    published_emerg_speed_up=reseved_data->emerg_speed_up;
   }
 };
 
