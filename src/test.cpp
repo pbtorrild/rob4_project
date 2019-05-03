@@ -15,6 +15,8 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   cv::namedWindow("view");
   cv::startWindowThread();
+  cv::Mat img=cv::imread("\\home\\catkin_ws\\src\\torrilds_package\\src\\templates\\test.jpg",0);
+  cv::imshow("tis",img);
   ros::spin();
   cv::destroyWindow("view");
 }

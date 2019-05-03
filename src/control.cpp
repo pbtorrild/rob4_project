@@ -12,7 +12,7 @@ private:
   float dist_th=0.3;
   // vel
   float std_vel =0.5;
-  float speed_up_vel=0.7
+  float speed_up_vel=0.7;
 protected:
   //emergcy stop status
   bool emerg_stop=true;
