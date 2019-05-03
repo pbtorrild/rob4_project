@@ -45,10 +45,12 @@
 
   <exec_depend>hls_lfcd_lds_driver</exec_depend>
   <exec_depend>usb_cam</exec_depend>
-
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
 
   <!-- used for msg generation -->
   <build_depend>message_generation</build_depend>
+  <build_depend>cv_bridge</build_depend>
   <exec_depend>message_runtime</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->

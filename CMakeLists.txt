@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   OpenCV
   image_transport
+  cv_bridge
 )
 
 ## System dependencies are found with CMake's conventions
@@ -123,6 +124,7 @@ catkin_package(
     geometry_msgs
     nav_msgs
     image_transport
+    cv_bridge
 #  DEPENDS system_lib
 )
 
@@ -155,6 +157,7 @@ add_executable(control src/control.cpp)
 add_executable(lidar_info src/lidar_info.cpp)
 add_executable(emerg_stop src/emerg_stop.cpp)
 add_executable(test src/test.cpp)
+add_executable(follow_line src/follow_line.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -169,6 +172,7 @@ add_dependencies(control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_T
 add_dependencies(lidar_info ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(emerg_stop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(follow_line ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 
@@ -182,6 +186,9 @@ add_dependencies(test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARG
    ${catkin_LIBRARIES}
  )
  target_link_libraries(control
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(follow_line
    ${catkin_LIBRARIES}
  )
 
