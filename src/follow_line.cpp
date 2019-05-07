@@ -9,11 +9,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
-ros::NodeHandle nh;
-ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 10);
 
 cv::Mat input, frame, threshold1;
-void line_pub(double distance_in){
+double distance_in;
+void line_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
 	torrilds_package::LineDist send_data;
 	send_data.line_dist=distance_in;
@@ -97,17 +96,27 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   cv::waitKey(30);
 
   ROS_INFO("%f",distance);
-	line_pub(distance);
+	distance_in=distance;
 }
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
+	ros::NodeHandle nh;
+	ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 1);
 
   cv::namedWindow("view");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("camera/color/image_raw", 1, imageCallback);
-  ros::spin();
+
+	ros::Rate rate(15.);
+	while (ros::ok()) {
+		line_pub(nh,pub);
+		rate.sleep();
+		ros::spinOnce();
+	}
+
+
   cv::destroyWindow("view");
 }
