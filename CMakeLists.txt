@@ -61,6 +61,7 @@ find_package(catkin REQUIRED COMPONENTS
    ObjectPos.msg
    RoadChange.msg
    SignsFound.msg
+   LineDist.msg
  )
 
 ## Generate services in the 'srv' folder

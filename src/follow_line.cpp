@@ -4,17 +4,23 @@
 
 #include "sensor_msgs/image_encodings.h"
 #include <image_transport/image_transport.h>
+#include <torrilds_package/LineDist.h>
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
+ros::NodeHandle nh;
+ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 10);
 
 cv::Mat input, frame, threshold1;
-
+void line_pub(double distance_in){
+	//check for changes in emerg_stop status
+	torrilds_package::LineDist send_data;
+	send_data.line_dist=distance_in;
+	pub.publish(send_data);
+}
 
 double Lines(cv::Mat& im) {
-
-
 
 	//converts it to grayscale
 	cv::cvtColor(im, threshold1, cv::COLOR_BGR2GRAY);
@@ -89,13 +95,15 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	 //shows the original img with the dot on top of the line hopefully
 	cv::imshow("view", input);
   cv::waitKey(30);
+
   ROS_INFO("%f",distance);
+	line_pub(distance);
 }
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
-  ros::NodeHandle nh;
+
   cv::namedWindow("view");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
