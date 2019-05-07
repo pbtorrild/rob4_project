@@ -1,5 +1,5 @@
 <launch>
-  
+
   <!--Launch the camara-->
   <arg name="serial_no"           default=""/>
   <arg name="json_file_path"      default=""/>
@@ -8,7 +8,7 @@
 
   <arg name="fisheye_width"       default="640"/>
   <arg name="fisheye_height"      default="480"/>
-  <arg name="enable_fisheye"      default="true"/>
+  <arg name="enable_fisheye"      default="false"/>
 
   <arg name="depth_width"         default="640"/>
   <arg name="depth_height"        default="480"/>
@@ -97,4 +97,15 @@
       <arg name="publish_odom_tf"          value="$(arg publish_odom_tf)"/>
     </include>
   </group>
+  <!-- rest of the  lauched nodes-->
+  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="frame_id" value="laser"/>
+  </node>
+  <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen"></node>
+  <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
+  <node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node>
+  <node pkg="torrilds_package" type="follow_line" name="follow_line" output="screen"></node>
+  <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
+
 </launch>
