@@ -325,7 +325,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   try
   {
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    cv::imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
     cv::waitKey(30);
   }
   catch (cv_bridge::Exception& e)
@@ -340,8 +339,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	//Executes the findColour function, with frame as input
 	findColour(frame);
 	// Shows frame and src after being processed
-	imshow("frame", frame);
-	imshow("src", src);
+	//imshow("frame", frame);
+	imshow("view_signs", src);
 	//waits x amounts of millisecond before next runthrough of the for loop
 	cv::waitKey(1);
 }
@@ -350,10 +349,10 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
-  cv::namedWindow("view");
+  cv::namedWindow("view_signs");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
   ros::spin();
-  cv::destroyWindow("view");
+  cv::destroyWindow("view_signs");
 }
