@@ -4,15 +4,17 @@
 
 #include <torrilds_package/ClosestObj.h>
 #include <torrilds_package/EmergStop.h>
-#include <torrilds_package/RoadChange.h>
+#include <torrilds_package/LineDist.h>
 #include <torrilds_package/SignsFound.h>
 class control_data{
 private:
-  // distance threshold
+  // distance threshold for emerg_stop
   float dist_th=0.3;
+  //distance in pixel to line
+  float desired_pix_dist=500;
   // vel
-  float std_vel =0.5;
-  float speed_up_vel=0.7;
+  float std_vel =0.2;
+  float speed_up_vel=0.5;
 protected:
   //emergcy stop status
   bool emerg_stop=true;
@@ -21,9 +23,18 @@ protected:
   bool speed70;
   bool stop_sign;
   //change of road
-  float rot_vel=0;
+  float line_dist_px=0;
 public:
   //funcktions below
+  double get_angular_vel(double distance_in){
+    double angular_vel;
+    //computiation
+    double dist_2l_error=distance_in-desired_pix_dist;
+      //we determine k by setting the error to 100 px and and the responce to be 1rad/s
+      float k=0.01;
+      angular_vel=dist_2l_error*k;
+    return angular_vel;
+  }
   void cmd_vel(ros::NodeHandle nh,ros::Publisher pub){
     //check for changes in emerg_stop status
     geometry_msgs::Twist send_data;
@@ -44,7 +55,7 @@ public:
         send_data.linear.x=speed_up_vel;
       }
       //Do the angular change
-      send_data.angular.z=rot_vel;
+      send_data.angular.z=get_angular_vel(line_dist_px);
     }
     else{
       send_data.linear.x=0;
@@ -60,8 +71,8 @@ public:
   void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
     emerg_stop=reseved_data->emerg_stop;
   }
-  void callback_road_change(const torrilds_package::RoadChange::ConstPtr& reseved_data){
-    rot_vel=reseved_data->rot_vel;
+  void callback_road_change(const torrilds_package::LineDist::ConstPtr& reseved_data){
+    line_dist_px=reseved_data->line_dist;
   }
 };
 
@@ -76,7 +87,7 @@ int main(int argc, char**argv){
   //subscibers
   ros::Subscriber sub_signs = nh.subscribe("signs_found",100,&control_data::callback_signs_found,&monitor);
   ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&control_data::callback_emerg_stop,&monitor);
-  ros::Subscriber sub_road_change = nh.subscribe("road_status",100,&control_data::callback_road_change,&monitor);
+  ros::Subscriber sub_road_change = nh.subscribe("line_dist",100,&control_data::callback_road_change,&monitor);
   //initialise the node with an emerg_stop
   while (ros::ok()) {
     monitor.cmd_vel(nh,pub);

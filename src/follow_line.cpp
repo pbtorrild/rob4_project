@@ -108,7 +108,7 @@ int main(int argc, char **argv)
   cv::namedWindow("view");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("camera/color/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
 
 	ros::Rate rate(15.);
 	while (ros::ok()) {

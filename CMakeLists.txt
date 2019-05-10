@@ -59,7 +59,6 @@ find_package(catkin REQUIRED COMPONENTS
    ClosestObj.msg
    EmergStop.msg
    ObjectPos.msg
-   RoadChange.msg
    SignsFound.msg
    LineDist.msg
  )
