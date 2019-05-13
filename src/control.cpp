@@ -11,10 +11,10 @@ private:
   // distance threshold for emerg_stop
   float dist_th=0.3;
   //distance in pixel to line
-  float desired_pix_dist=500;
+  float desired_pix_dist=538;
   // vel
   float std_vel =0.1;
-  float speed_up_vel=0.5;
+  float speed_up_vel=0.3;
 protected:
   //emergcy stop status
   bool emerg_stop=true;
