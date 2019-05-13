@@ -31,7 +31,7 @@ public:
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
       //we determine k by setting the error to 100 px and and the responce to be 1rad/s
-      float k=0.01;
+      float k=0.0;
       angular_vel=dist_2l_error*k;
     return angular_vel;
   }
@@ -42,14 +42,7 @@ public:
     //fist check for emergency stop
     if (emerg_stop!=true) {
       //sign input
-      if (speed70=true) {
-        send_data.linear.x=0.7;
-      } else if (stop_sign=true) {
-        send_data.linear.x=0;
-      } else {
-        /* code  for no signs */
-        send_data.linear.x=std_vel;
-      }
+      send_data.linear.x=std_vel;
       //////////////////////////////
       if (emerg_speed_up=true) {
         send_data.linear.x=speed_up_vel;
