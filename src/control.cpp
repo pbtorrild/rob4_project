@@ -31,7 +31,7 @@ public:
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
       //we determine k by setting the error to 100 px and and the responce to be 1rad/s
-      float k=0.0;
+      float k=0.1;
       angular_vel=dist_2l_error*k;
     return angular_vel;
   }
@@ -44,9 +44,6 @@ public:
       //sign input
       send_data.linear.x=std_vel;
       //////////////////////////////
-      if (emerg_speed_up=true) {
-        send_data.linear.x=speed_up_vel;
-      }
       //Do the angular change
       send_data.angular.z=get_angular_vel(line_dist_px);
     }
