@@ -110,10 +110,8 @@ int main(int argc, char **argv)
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
 
-	ros::Rate rate(15.);
 	while (ros::ok()) {
 		line_pub(nh,pub);
-		rate.sleep();
 		ros::spinOnce();
 	}
 
