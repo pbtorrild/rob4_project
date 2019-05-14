@@ -72,7 +72,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   // here you select the area you want to chceck for finding the line, be carefull, when selecting the entire image,
   //then it will check only the top row later in algorythm,
   //to change that change the y-value, unit vector of y points down from top left corner btw
-	cv::Rect inputRect = cv::Rect((input.cols * 2) / 3, (input.rows * 2) / 3, input.cols / 3, input.rows / 3);
+	cv::Rect inputRect = cv::Rect(0, (input.rows * 2) / 3, input.cols, input.rows / 3);
 
 	//cuts out the desired area
 	cv::Mat frame = input(inputRect);
