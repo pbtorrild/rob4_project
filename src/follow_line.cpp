@@ -95,7 +95,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	cv::imshow("view", input);
   cv::waitKey(30);
 
-  ROS_INFO("%f",distance);
 	distance_in=distance;
 }
 

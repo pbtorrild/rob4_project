@@ -11,7 +11,7 @@ private:
   // distance threshold for emerg_stop
   float dist_th=0.3;
   //distance in pixel to line
-  float desired_pix_dist=538;
+  float desired_pix_dist=320;
   // vel
   float std_vel =0.1;
   float speed_up_vel=0.3;
@@ -37,6 +37,7 @@ public:
     double angular_vel;
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
+    ROS_INFO("Error: %",dist_2l_error);
       //we determine k by setting the error to 100 px and and the responce to be 1rad/s
       float k=0.01;
       angular_vel=dist_2l_error*k;
@@ -94,8 +95,10 @@ int main(int argc, char**argv){
   ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&control_data::callback_emerg_stop,&monitor);
   ros::Subscriber sub_road_change = nh.subscribe("line_dist",100,&control_data::callback_road_change,&monitor);
   //initialise the node with an emerg_stop
+  ros::Rate rate(30.);
   while (ros::ok()) {
     monitor.cmd_vel(nh,pub);
+    rate.sleep();
     ros::spinOnce();
   }
 
