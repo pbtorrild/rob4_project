@@ -8,14 +8,40 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
 
+#include <torrilds_package/SignsFound.h>
+
 //Puts input image input into "video"                   Path to video here
 cv::VideoCapture video = cv::VideoCapture("/home/peter/catkin_ws/src/torrilds_package/src/templates/videotest.mp4");
 // creates Matrix src andd frame, used in the main function
 cv::Mat src, frame;
 
+bool MainSideRoad;
+bool Yield;
+bool Kids;
+bool DontGoLeft;
+bool Seventy;
+bool Thirty;
+bool Fifty;
+bool BothWaysNo;
+bool Cross;
+
+void sign_pub(ros::NodeHandle nh,ros::Publisher pub){
+	//check for changes in emerg_stop status
+	torrilds_package::SignsFound send_data;
+	send_data.MainSideRoad=MainSideRoad;
+	send_data.Yield=Yield;
+	send_data.Kids=Kids;
+	send_data.DontGoLeft=DontGoLeft;
+	send_data.Seventy=Seventy;
+	send_data.Thirty=Thirty;
+	send_data.Fifty=Fifty;
+	send_data.BothWaysNo=BothWaysNo;
+	send_data.Cross=Cross;
+	pub.publish(send_data);
+}
 //setabel funktion, takes image to print label on, the string to print, and object index as input
 //The entire funktion is a placeholder for the output the TurtleBot needs to act on the sign given
-void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& contour){
+void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& contour) {
 
 	//Choosing font for the text
 	int fontface = cv::FONT_HERSHEY_SIMPLEX;
@@ -38,6 +64,8 @@ void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& cont
 	//Draws the text string onto the inout image
 	putText(im, label, pt, fontface, scale, CV_RGB(0, 0, 0), thickness, 8);
 }
+
+
 
 //minArr funtion. Finds the smalles number in an array, taking the araay and number of elements in the array as inputs
 int minArr(double arr[], int n) {
@@ -104,12 +132,12 @@ int match(cv::Mat templateArray[], double ITS[], int images, cv::Rect sqr1, doub
 }
 
 //inside funtion, takes bounding box, the shape-type index, colour + shape-type, and the contour index as input
-void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>& contour){
+void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>& contour) {
 
 	//Creates an array containing the index number of all the signs recognizable
-	int signIndex[] = { 111, 112, 113, 131, 132, 221 };
+	int signIndex[] = { 111, 112, 113, 131, 132, 133, 134, 135, 221 };
 	//corresponding string names for each sign
-	std::string signLabel[] = { "MainSideRoad", "Yield", "Kids", "DontGoLeft", "70", "Cross" };
+	std::string signLabel[] = { "MainSideRoad", "Yield", "Kids", "DontGoLeft", "70", "30", "50", "BothWaysNo" "Cross" };
 	//Creates an int called sign, this is not used right here, but will be later on
 	int sign;
 
@@ -117,11 +145,11 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 10) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat triangles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/mainsideroad.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/yield.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/kids.png")};
+		cv::Mat triangles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\mainsideroad.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\yield.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\kids.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
-		double triITSratio[] = {0.345368, 0.516129032, 0.3577405858};
+		double triITSratio[] = { 0.345368, 0.516129032, 0.3577405858 };
 		//Index number of each template in an array
-		int triSign[] = {1, 2, 3};
+		int triSign[] = { 1, 2, 3 };
 		//An array with as many elements as templates for the specific shape
 		double bestFitTri[3] = {};
 
@@ -137,14 +165,14 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	}
 
 	// if statement checking what kind of sign we are dealing with
-	if(shapetype == 20){
+	if (shapetype == 20) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat rectangles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/WalkerTemp.png")};
+		cv::Mat rectangles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\WalkerTemp.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
-		double rectITSratio[] = {0.627659};
+		double rectITSratio[] = { 0.627659 };
 		//Index number of each template in an array
-		int rectSign[] = {1};
+		int rectSign[] = { 1 };
 		//An array with as many elements as templates for the specific shape
 		double bestFitRect[1] = {};
 
@@ -163,13 +191,13 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 30) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat circles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/dontgoleft.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/70.png") };
+		cv::Mat circles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\dontgoleft.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\70.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\30.jpg"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\50.jpg"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\blank.jpg") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
-		double cirITSratio[] = { 0.5091743, 0.5019762 };
+		double cirITSratio[] = { 0.5091743, 0.5019762, 0.5198776758, 0.5617021277, 0.5196850394};
 		//Index number of each template in an array
-		int cirSign[] = { 1, 2 };
+		int cirSign[] = { 1, 2, 3, 4, 5};
 		//An array with as many elements as templates for the specific shape
-		double bestFitCir[2] = {};
+		double bestFitCir[5] = {};
 
 		// this int is used to count number of templates
 		int cirimages = 0;
@@ -193,7 +221,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	//Used to determin wich sign was detected
 	int j = 0;
 	//The for loop will run untill the output from match, matches the i'th element in signIndex
-	for (int i = 0; i < tempimages+1; i++) {
+	for (int i = 0; i < tempimages + 1; i++) {
 		// j = i
 		j = i;
 		//Checking if sign matches the i'th element in signIndex
@@ -206,7 +234,36 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (j < tempimages) {
 		//Calls for setLabel with the image input, the name of the detected sign, and the specific object index number as input
 		//The entire funktion is a placeholder for the output the TurtleBot needs to act on the sign given
-		setLabel(src, signLabel[j], contour);
+		//setLabel(src, signLabel[j], contour);
+
+		switch (sign) {
+			case 111: MainSideRoad = true;
+				break;
+
+			case 112: Yield = true;
+				break;
+
+			case 113: Kids = true;
+				break;
+
+			case 131: DontGoLeft = true;
+				break;
+
+			case 132: Seventy = true;
+				break;
+
+			case 133: Thirty = true;
+				break;
+
+			case 134: Fifty = true;
+				break;
+
+			case 135: BothWaysNo = true;
+				break;
+
+			case 221: Cross = true;
+				break;
+		}
 	}
 }
 
@@ -238,7 +295,7 @@ void findShapes(cv::Mat& im, int colour) {
 		approxPolyDP(cv::Mat(contours[k]), approx, cv::arcLength(cv::Mat(contours[k]), true)*0.02, true);
 
 		// Ask if the object has 3 vertices (corners) and the size of the object is more than er certain threshold
-		if ((approx.size() == 3)&& (contourArea(contours[k]) > 1000)) {
+		if ((approx.size() == 3) && (contourArea(contours[k]) > 1000)) {
 			//Creates bounding box of the specific object
 			cv::Rect bbTri = boundingRect(contours[k]);
 
@@ -298,10 +355,10 @@ void findColour(cv::Mat& im) {
 		The below four int's are calculationg that percentage og 255
 	*/
 
-	int s1 = 0.60*255;
-	int s2 = 0.95*255;
-	int v1 = 0.36*255;
-	int v2 = 0.85*255;
+	int s1 = 0.60 * 255;
+	int s2 = 0.95 * 255;
+	int v1 = 0.36 * 255;
+	int v2 = 0.85 * 255;
 
 	/*
 		And image in opencv is in BGR form, but the hue for red is ranged at the very edges of the scale.
@@ -310,13 +367,13 @@ void findColour(cv::Mat& im) {
 	// converting from RGB to HSV
 	cvtColor(im, red, cv::COLOR_RGB2HSV);
 	// converting from BGR to HSV
-	// cvtColor(im, blue, cv::COLOR_BGR2HSV);
+	cvtColor(im, blue, cv::COLOR_BGR2HSV);
 	// Using the inRange funtion to threshold a specific colour
 	inRange(red, cv::Scalar(100, s1, v1), cv::Scalar(140, s2, v2), red);
-	//inRange(blue, cv::Scalar(100, s1, v1), cv::Scalar(140, s2, v2), blue);
+	inRange(blue, cv::Scalar(100, s1, v1), cv::Scalar(140, s2, v2), blue);
 	//Executing the findShapes function with the colour thresholded image and a colour index as an input
 	findShapes(red, 100);
-	//findShapes(blue, 200);
+	findShapes(blue, 200);
 
 }
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
@@ -349,10 +406,20 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
+	ros::Publisher pub = nh.advertise<torrilds_package::SignsFound>("signs_found", 1);
+
+
   cv::namedWindow("view_signs");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
-  ros::spin();
+
+	ros::Rate rate(15.);
+	while (ros::ok()) {
+		sign_pub(nh,pub);
+		rate.sleep();
+		ros::spinOnce();
+	}
+
   cv::destroyWindow("view_signs");
 }

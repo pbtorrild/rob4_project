@@ -20,8 +20,15 @@ protected:
   bool emerg_stop=true;
   bool emerg_speed_up=false;
   //sign input
-  bool speed70;
-  bool stop_sign;
+  bool MainSideRoad;
+  bool Yield;
+  bool Kids;
+  bool DontGoLeft;
+  bool Seventy;
+  bool Thirty;
+  bool Fifty;
+  bool BothWaysNo;
+  bool Cross;
   //change of road
   float line_dist_px=0;
 public:
@@ -55,8 +62,16 @@ public:
   }
   //callback:
   void callback_signs_found(const torrilds_package::SignsFound::ConstPtr& reseved_data){
-    speed70=reseved_data->speed70;
-    stop_sign=reseved_data->stop_sign;
+    MainSideRoad=reseved_data->MainSideRoad;
+    Yield=reseved_data->Yield;
+    Kids=reseved_data->Kids;
+    DontGoLeft=reseved_data->DontGoLeft;
+    Seventy=reseved_data->Seventy;
+    Thirty=reseved_data->Thirty;
+    Fifty=reseved_data->Fifty;
+    BothWaysNo=reseved_data->BothWaysNo;
+    Cross=reseved_data->Cross;
+
   }
   void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
     emerg_stop=reseved_data->emerg_stop;
