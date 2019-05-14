@@ -77,7 +77,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	//cuts out the desired area
 	cv::Mat frame = input(inputRect);
 	// runs the algorythm as well as calculating the distance from left corner of the original non cut frame
-	double distance = Lines(frame) + input.cols/3*2;
+	double distance = Lines(frame);
 
 	// slaps a point on the original image so you can see if it works
   //show referal points
