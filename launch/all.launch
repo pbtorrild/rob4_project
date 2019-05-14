@@ -1,12 +1,4 @@
 <launch>
-  <!--turtlebot moters-->
-  <arg name="multi_robot_name" default=""/>
-
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
-    <param name="port" value="/dev/ttyACM0"/>
-    <param name="baud" value="115200"/>
-    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
-  </node>
   <!--Launch the camara-->
   <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
     <param name="video_device" value="/dev/video0" />
@@ -28,7 +20,7 @@
   <!-- the self made files -->
   <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen"></node>
   <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
-  <!--<node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node> -->
+  <node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node>
   <node pkg="torrilds_package" type="follow_line" name="follow_line" output="screen"></node>
   <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
 
