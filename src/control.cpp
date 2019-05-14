@@ -87,7 +87,7 @@ int main(int argc, char**argv){
   ros::init(argc, argv, "vel_controller");
   ros::NodeHandle nh;
   //define publisher
-  ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 1);
   //set class member
   control_data monitor;
   //subscibers
