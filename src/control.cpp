@@ -37,7 +37,7 @@ public:
     double angular_vel;
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
-    ROS_INFO("Error: %",dist_2l_error);
+    ROS_INFO("Error: %f",dist_2l_error);
       //we determine k by setting the error to 100 px and and the responce to be 1rad/s
       float k=0.01;
       angular_vel=dist_2l_error*k;
