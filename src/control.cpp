@@ -40,7 +40,7 @@ public:
     ROS_INFO("Error: %f",dist_2l_error);
       //we determine k by setting the error to 100 px and and the responce to be 1rad/s
       float k=0.01;
-      angular_vel=dist_2l_error*k;
+      angular_vel=-dist_2l_error*k;
     return angular_vel;
   }
   void cmd_vel(ros::NodeHandle nh,ros::Publisher pub){
