@@ -13,7 +13,7 @@ private:
   //distance in pixel to line
   float desired_pix_dist=320;
   // vel
-  float std_vel =0.1;
+  float std_vel =0.05;
   float speed_up_vel=0.3;
 protected:
   //emergcy stop status
@@ -95,7 +95,7 @@ int main(int argc, char**argv){
   ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&control_data::callback_emerg_stop,&monitor);
   ros::Subscriber sub_road_change = nh.subscribe("line_dist",100,&control_data::callback_road_change,&monitor);
   //initialise the node with an emerg_stop
-  ros::Rate rate(30.);
+  ros::Rate rate(15.);
   while (ros::ok()) {
     monitor.cmd_vel(nh,pub);
     rate.sleep();
