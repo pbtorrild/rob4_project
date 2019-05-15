@@ -10,11 +10,6 @@
 #include <iostream>
 #include <math.h>
 
-//using namespace cv;
-//Here we define where the video comes from
-//cv::VideoCapture Vid = cv::VideoCapture("C:\\Users\\caspe\\OneDrive\\Billeder\\BilBagfraVid.mp4");
-
-
 //Function that does the prossesing duh... it takes an image as the input, this is gotten from the main function...
 void Processing(cv::Mat input)
 {
