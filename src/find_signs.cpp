@@ -9,10 +9,6 @@
 #include <cv_bridge/cv_bridge.h>
 
 #include <torrilds_package/SignsFound.h>
-
-//Puts input image input into "video"                   Path to video here
-cv::VideoCapture video = cv::VideoCapture("/home/peter/catkin_ws/src/torrilds_package/src/templates/videotest.mp4");
-// creates Matrix src andd frame, used in the main function
 cv::Mat src, frame;
 
 bool MainSideRoad;
@@ -145,7 +141,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 10) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat triangles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\mainsideroad.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\yield.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\kids.png") };
+		cv::Mat triangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngmainsideroad.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngyield.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngkids.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double triITSratio[] = { 0.345368, 0.516129032, 0.3577405858 };
 		//Index number of each template in an array
@@ -168,7 +164,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 20) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat rectangles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\WalkerTemp.png") };
+		cv::Mat rectangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngWalkerTemp.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double rectITSratio[] = { 0.627659 };
 		//Index number of each template in an array
@@ -191,7 +187,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 30) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat circles[] = { cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\dontgoleft.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\70.png"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\30.jpg"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\50.jpg"), cv::imread("C:\\Users\\Jasper\\Desktop\\Roadsigns\\blank.jpg") };
+		cv::Mat circles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngdontgoleft.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.png70.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.png30.jpg"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.png50.jpg"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.pngblank.jpg") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double cirITSratio[] = { 0.5091743, 0.5019762, 0.5198776758, 0.5617021277, 0.5196850394};
 		//Index number of each template in an array
