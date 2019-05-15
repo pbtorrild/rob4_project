@@ -160,6 +160,7 @@ add_executable(test src/test.cpp)
 add_executable(follow_line src/follow_line.cpp)
 add_executable(find_signs src/find_signs.cpp)
 add_executable(find_car src/find_car.cpp)
+add_executable(find_car src/find_human.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -177,6 +178,7 @@ add_dependencies(test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARG
 add_dependencies(follow_line ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(find_signs ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(find_car ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(find_human ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 
@@ -199,6 +201,9 @@ add_dependencies(find_car ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_
    ${catkin_LIBRARIES}
  )
  target_link_libraries(find_car
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(find_human
    ${catkin_LIBRARIES}
  )
 
