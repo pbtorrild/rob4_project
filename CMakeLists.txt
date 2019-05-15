@@ -160,7 +160,7 @@ add_executable(test src/test.cpp)
 add_executable(follow_line src/follow_line.cpp)
 add_executable(find_signs src/find_signs.cpp)
 add_executable(find_car src/find_car.cpp)
-add_executable(find_car src/find_human.cpp)
+add_executable(find_human src/find_human.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
