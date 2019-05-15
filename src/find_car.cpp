@@ -66,7 +66,7 @@ void Processing(cv::Mat input)
 				int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
 				cv::Point Width = cv::Point(RedLight[1].x, RedLight[1].y - (WidthOfCar / 3));
 				cv::Rect CarHere = cv::Rect(Width, cv::Point(Width.x + WidthOfCar + RedLight[0].width, Width.y + WidthOfCar));
-				rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
+				cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
 			}
       cv::imshow("view_car",input);
