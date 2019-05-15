@@ -69,8 +69,7 @@ void Processing(cv::Mat input)
 				cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
 			}
-      cv::imshow("view_car",input);
-      cv::waitKey(0);
+
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
@@ -86,6 +85,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
     ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
   }
   cv::Mat input = cv_ptr->image;
+  cv::imshow("view_car",input);
+  cv::waitKey(0);
   Processing(input);
 }
 
