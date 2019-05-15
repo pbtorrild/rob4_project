@@ -69,6 +69,7 @@ void Processing(cv::Mat input)
 				rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
 			}
+      cv::imshow("view_car",input);
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
