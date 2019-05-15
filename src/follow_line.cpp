@@ -15,7 +15,10 @@ double distance_in;
 void line_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
 	torrilds_package::LineDist send_data;
-	send_data.line_dist=distance_in;
+	//threshold for the dot to be inside the view of the cam
+	if (distance_in>=0&&dist_th<=640) {
+		send_data.line_dist=distance_in;
+	}
 	pub.publish(send_data);
 }
 
