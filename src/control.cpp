@@ -61,6 +61,16 @@ public:
     }
     pub.publish(send_data);
   }
+  void end_of_alg(ros::NodeHandle nh,ros::Publisher pub){
+
+    geometry_msgs::Twist send_data;
+
+    send_data.linear.x=0;
+    send_data.angular.z=0;
+
+    pub.publish(send_data);
+    ros::spinOnce();
+  }
   //callback:
   void callback_signs_found(const torrilds_package::SignsFound::ConstPtr& reseved_data){
     MainSideRoad=reseved_data->MainSideRoad;
@@ -101,5 +111,5 @@ int main(int argc, char**argv){
     rate.sleep();
     ros::spinOnce();
   }
-
+  monitor.end_of_alg(nh,pub);
 }
