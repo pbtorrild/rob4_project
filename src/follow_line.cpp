@@ -28,7 +28,7 @@ double Lines(cv::Mat& im) {
 	cv::cvtColor(im, threshold1, cv::COLOR_BGR2GRAY);
 
 	//thresholds out only black and dark gray colors, 70 is current treshold,  set it lower and it will detect only darker black
-	cv::threshold(threshold1, threshold1, 70, 255, cv::THRESH_BINARY_INV);
+	cv::threshold(threshold1, threshold1, 100, 255, cv::THRESH_BINARY_INV);
 
 	//Converts image format back to BRG, otherwise other functions dont work
 	cv::cvtColor(threshold1, threshold1, cv::COLOR_GRAY2BGR);
