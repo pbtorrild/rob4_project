@@ -275,7 +275,7 @@ void findShapes(cv::Mat& im, int colour) {
 
 	//The canny funtion is purely to get a better idea what is happening to the image when tweaking it, by showing only the outline of the detected object, can be removed
 	Canny(im, im, 255, 250, 3);
-	imshow("Canny", im);
+
 
 	//IDFK, something somthing contours...
 	std::vector<std::vector<cv::Point>> contours;
@@ -393,6 +393,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	findColour(frame);
 	// Shows frame and src after being processed
 	//imshow("frame", frame);
+	cv::Rect ROI=cv::Rect(src.cols - (src.cols / 3), 0, src.cols / 3, src.rows / 3);
+	cv::rectangle(src, ROI, cv::Scalar(255, 255, 255), 2, 8, 0);
 	imshow("view_signs", src);
 	//waits x amounts of millisecond before next runthrough of the for loop
 	cv::waitKey(1);

@@ -15,7 +15,7 @@ double distance_in;
 void line_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
 	torrilds_package::LineDist send_data;
-	//threshold for the dot to be inside the view of the cam
+	//threshold for the dot to be inside the view_line of the cam
 	if (distance_in>=0&&distance_in<=640) {
 		send_data.line_dist=distance_in;
 	}
@@ -95,7 +95,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 
 
 	 //shows the original img with the dot on top of the line hopefully
-	cv::imshow("view", input);
+	cv::imshow("view_line", input);
   cv::waitKey(30);
 
 	distance_in=distance;
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 1);
 
-  cv::namedWindow("view");
+  cv::namedWindow("view_line");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
@@ -118,5 +118,5 @@ int main(int argc, char **argv)
 	}
 
 
-  cv::destroyWindow("view");
+  cv::destroyWindow("view_line");
 }
