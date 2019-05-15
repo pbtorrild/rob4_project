@@ -70,6 +70,7 @@ void Processing(cv::Mat input)
 
 			}
       cv::imshow("view_car",input);
+      cv::waitKey(0);
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
@@ -86,12 +87,11 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   }
   cv::Mat input = cv_ptr->image;
   Processing(input);
-  cv::imshow("view_car",input);
 }
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "image_listene  r");
+  ros::init(argc, argv, "image_listener");
 	ros::NodeHandle nh;
 	cv::namedWindow("view_car");
   cv::startWindowThread();
