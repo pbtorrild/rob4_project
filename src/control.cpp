@@ -38,8 +38,8 @@ public:
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
     ROS_INFO("Error: %f",dist_2l_error);
-      //we determine k by setting the error to 100 px and and the responce to be 1rad/s
-      float k=0.01;
+      //we determine k by taking the maximum wanted angular vel and diviting it by the maximum error
+      float k=1/320; //A_vel_max/e_max , A_vel_max=1 & e_max=320
       angular_vel=-dist_2l_error*k;
     return angular_vel;
   }
