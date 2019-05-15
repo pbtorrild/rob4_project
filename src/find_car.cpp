@@ -77,8 +77,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   try
   {
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-		//Dont know if waitKey is nessesary, its in the signdetect, but not humanDetect
-		cv::waitKey(0);
+
   }
   catch (cv_bridge::Exception& e)
   {
@@ -86,6 +85,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   }
   cv::Mat input = cv_ptr->image;
   Processing(input);
+  cv::imshow("view_car",input);
 }
 
 int main(int argc, char **argv)
