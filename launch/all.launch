@@ -22,6 +22,7 @@
   <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
   <node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node>
   <node pkg="torrilds_package" type="follow_line" name="follow_line" output="screen"></node>
+  <node pkg="torrilds_package" type="find_human" name="find_human" output="screen"></node>
   <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
 
 </launch>

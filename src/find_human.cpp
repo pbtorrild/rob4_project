@@ -9,9 +9,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
-//#include <opencv2/objdetect.hpp>
-//using namespace std;
-//using namespace cv;
 
 //use non-maxima suppression to eliminate multiple overlapping boxes
 void find_human(cv::Mat img_re)
