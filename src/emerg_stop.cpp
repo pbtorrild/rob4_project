@@ -58,6 +58,7 @@ int main(int argc, char**argv){
   //subscribe to the topic closest_object with que size 100 and
   //go to fucktion callback_closest_obj in the class movement with member &monitor
   // plz note that this isnt monitor but a constant verson of thet member
+
   ros::Subscriber sub_closest_object = nh.subscribe("closest_object",100,&emerg_status::callback_closest_obj,&monitor);
   ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&emerg_status::callback_emerg_stop,&monitor);
 
