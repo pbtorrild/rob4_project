@@ -13,7 +13,7 @@ private:
   //distance in pixel to line
   float desired_pix_dist=320;
   // vel
-  float std_vel =0.05;
+  float std_vel =0.0;
   float speed_up_vel=0.3;
 protected:
   //emergcy stop status
