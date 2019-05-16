@@ -182,30 +182,14 @@ add_dependencies(find_human ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTE
 
 ## Specify libraries to link a library or executable target against
 
- target_link_libraries(lidar_info
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(emerg_stop
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(test
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(control
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(follow_line
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(find_signs
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(find_car
-   ${catkin_LIBRARIES}
- )
- target_link_libraries(find_human
-   ${catkin_LIBRARIES}
- )
+ target_link_libraries(lidar_info   ${catkin_LIBRARIES})
+ target_link_libraries(emerg_stop   ${catkin_LIBRARIES})
+ target_link_libraries(test         ${catkin_LIBRARIES})
+ target_link_libraries(control      ${catkin_LIBRARIES})
+ target_link_libraries(follow_line  ${catkin_LIBRARIES})
+ target_link_libraries(find_signs   ${catkin_LIBRARIES})
+ target_link_libraries(find_car     ${catkin_LIBRARIES})
+ target_link_libraries(find_human   ${catkin_LIBRARIES})
 
 #############
 ## Install ##
