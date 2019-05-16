@@ -19,8 +19,6 @@ void find_human(cv::Mat img_re)
 	//inside the HOGDescriptor in opencv theres a function called "setSVMDetector", it is used to detect humans "Returns coefficients of the classifier trained for people detection (for 64x128 windows)."
 	HogFile.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector()); //theres an alternative called "getDaimlerPeopleDetector ()" , but couldnt get it to work
 
-	cv::namedWindow("video capture", CV_WINDOW_AUTOSIZE);
-
 		//Make vector of opencvRectangles and call them found, then make another called found_filtered...
 		std::vector<cv::Rect> BoundingBoxRect, BoundingBoxRect_filtered;
 		//running the detector on fefault settings, puts
