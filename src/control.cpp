@@ -13,7 +13,7 @@ private:
   //distance in pixel to line
   float desired_pix_dist=320;
   // vel
-  float std_vel =0.0;
+  float std_vel =0.05;
   float speed_up_vel=0.3;
 protected:
   //emergcy stop status
@@ -39,7 +39,7 @@ public:
     double dist_2l_error=distance_in-desired_pix_dist;
     ROS_INFO("Error: %f",dist_2l_error);
       //we determine k by taking the maximum wanted angular vel and diviting it by the maximum error
-      float k=2/320; //A_vel_max/e_max , A_vel_max=2 & e_max=320
+      float k=0.0015; //A_vel_max/e_max , A_vel_max=2 & e_max=320
       angular_vel=-dist_2l_error*k;
     return angular_vel;
   }
