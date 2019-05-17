@@ -1,3 +1,4 @@
+float32 scan_time
 torrilds_package/ObjectPos forward_obj
 
 torrilds_package/ObjectPos backward_obj

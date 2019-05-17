@@ -9,6 +9,7 @@ protected:
   bool emerg_stop=true;
   bool emerg_speed_up=false;
 public:
+  float scan_time;
   //funcktions below
   void emerg_pub(ros::NodeHandle nh,ros::Publisher pub){
     //check for changes in emerg_stop status
@@ -23,7 +24,8 @@ public:
   void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
     float forward_dist=reseved_data->forward_obj.distance;
     float back_dist=reseved_data->backward_obj.distance;
-
+    scan_time=reseved_data->scan_time;
+    ROS_INFO("%f : %f",forward_dist,back_dist);
     //test if the closest object ahead is over or under the threshold
     if (forward_dist <= dist_th){
       emerg_stop=true;
@@ -46,7 +48,7 @@ int main(int argc, char**argv){
   ros::init(argc, argv, "emerg_stop");
   ros::NodeHandle nh;
   //define publisher
-  ros::Publisher pub = nh.advertise<torrilds_package::EmergStop>("emerg_stop_status", 10);
+  ros::Publisher pub = nh.advertise<torrilds_package::EmergStop>("emerg_stop_status", 1);
   //set class member
   emerg_status monitor;
   //subscribe to the topic closest_object with que size 100 and
@@ -56,8 +58,11 @@ int main(int argc, char**argv){
   ros::Subscriber sub_closest_object = nh.subscribe("closest_object",100,&emerg_status::callback_closest_obj,&monitor);
 
   //initialise the node with an emerg_stop
+
   while (ros::ok()) {
+    ros::Rate rate(monitor.scan_time);
     monitor.emerg_pub(nh,pub);
+    rate.sleep();
     ros::spinOnce();
   }
 

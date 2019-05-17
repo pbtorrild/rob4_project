@@ -67,6 +67,7 @@ public:
     send_data.backward_obj.distance=obj_back_dist;
     send_data.backward_obj.angle=obj_back_angle;
     //publish
+    send_data.scan_time=scan_time;
     closest_object_pub_.publish(send_data);
   }
 private:
