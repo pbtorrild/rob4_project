@@ -56,10 +56,10 @@ public:
       send_data.linear.x=std_vel; // go with a std vel of 50 km/h
 
       //sign to determine speed
-      if (Seventy=true) {
+      if (Seventy==true) {
         send_data.linear.x=vel_70;
       }
-      if (Fifty=true) {
+      if (Fifty==true) {
         send_data.linear.x=vel_50;
       }
       if (emerg_speed_up==true) {
@@ -73,7 +73,7 @@ public:
       // Special cases of change in vel and angle
 
       //perfon a stop if there is a human at a crossing
-      if (human=true && Cross=true) {
+      if (human==true && Cross==true) {
         send_data.linear.x=0;
         send_data.angular.z=get_angular_vel(line_dist_px);
       }
