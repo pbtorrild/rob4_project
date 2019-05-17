@@ -110,6 +110,7 @@ public:
   }
   void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
     emerg_stop=reseved_data->emerg_stop;
+    emerg_speed_up=reseved_data->emerg_speed_up;
   }
   void callback_road_change(const torrilds_package::LineDist::ConstPtr& reseved_data){
     line_dist_px=reseved_data->line_dist;
