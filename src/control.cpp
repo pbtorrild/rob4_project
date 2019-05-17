@@ -100,8 +100,8 @@ int main(int argc, char**argv){
   control_data monitor;
   //subscibers
   ros::Subscriber sub_signs = nh.subscribe("signs_found",1,&control_data::callback_signs_found,&monitor);
-  ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&control_data::callback_emerg_stop,&monitor);
-  ros::Subscriber sub_road_change = nh.subscribe("line_dist",100,&control_data::callback_road_change,&monitor);
+  ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",1,&control_data::callback_emerg_stop,&monitor);
+  ros::Subscriber sub_road_change = nh.subscribe("line_dist",1,&control_data::callback_road_change,&monitor);
   //initialise the node with an emerg_stop
   ros::Rate rate(15.);
   while (ros::ok()) {
