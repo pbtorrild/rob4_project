@@ -10,9 +10,20 @@
 #include <iostream>
 #include <math.h>
 
-//Function that does the prossesing duh... it takes an image as the input, this is gotten from the main function...
-void Processing(cv::Mat input)
+void imageCallback(const sensor_msgs::ImageConstPtr msg)
 {
+  cv_bridge::CvImagePtr cv_ptr;
+  try
+  {
+    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+
+  }
+  catch (cv_bridge::Exception& e)
+  {
+    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+  }
+  cv::Mat input = cv_ptr->image;
+
   //initializing the imiges used for the processing stages
   cv::Mat img2, morph1, img;
 	//As we want to look for the colour red, and we need the location of the range on the color wheel to be positive angles,
@@ -61,7 +72,7 @@ void Processing(cv::Mat input)
 		//Make the bounding box placed around the car. with the color code of violet~ish and a thichness of 3 pixels
 		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 	}
-	//Same as before.
+	//Check if the other redlight is on the left side
 	else {
 		int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
 		cv::Point Width = cv::Point(RedLight[1].x, RedLight[1].y - (WidthOfCar / 3));
@@ -69,23 +80,7 @@ void Processing(cv::Mat input)
 		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
 	}
-  cv::imshow("view_car",input);
-  cv::waitKey(0);
-}
 
-void imageCallback(const sensor_msgs::ImageConstPtr msg)
-{
-  cv_bridge::CvImagePtr cv_ptr;
-  try
-  {
-    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-
-  }
-  catch (cv_bridge::Exception& e)
-  {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
-  }
-  cv::Mat input = cv_ptr->image;
   cv::imshow("view_car",input);
   cv::waitKey(0);
   Processing(input);
