@@ -79,13 +79,11 @@ int main(int argc, char **argv)
   //initialize subsciber
   ros::init(argc, argv, "laser_info");
   ros::NodeHandle n;
-  ros::Publisher closest_obj=n.advertise<torrilds_package::ClosestObj>("closest_object",10);
+  ros::Publisher closest_obj=n.advertise<torrilds_package::ClosestObj>("closest_object",1);
   lidar_info monitor(closest_obj);
   //sibscribe to the scan topic and go to the function above
-  ros::Subscriber sub = n.subscribe("scan", 1000, &lidar_info::callback_lidar_data,&monitor);
+  ros::Subscriber sub = n.subscribe("scan", 1, &lidar_info::callback_lidar_data,&monitor);
   //spin untill there is no more rosmaster (roscore)
   ros::spin();
-
-
   return 0;
 }
