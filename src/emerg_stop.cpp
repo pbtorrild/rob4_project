@@ -25,7 +25,6 @@ public:
     float forward_dist=reseved_data->forward_obj.distance;
     float back_dist=reseved_data->backward_obj.distance;
     scan_time=reseved_data->scan_time;
-    ROS_INFO("%f : %f",forward_dist,back_dist);
     //test if the closest object ahead is over or under the threshold
     if (forward_dist <= dist_th){
       emerg_stop=true;
