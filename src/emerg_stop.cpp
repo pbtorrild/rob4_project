@@ -7,43 +7,37 @@ private:
   float dist_th=0.3;
 protected:
   bool emerg_stop=true;
-  bool published_emerg_stop=true;
-
-  bool emerg_speed_up=true;
-  bool published_emerg_speed_up;
+  bool emerg_speed_up=false;
 public:
   //funcktions below
   void emerg_pub(ros::NodeHandle nh,ros::Publisher pub){
     //check for changes in emerg_stop status
     torrilds_package::EmergStop send_data;
-    if(published_emerg_stop!=emerg_stop){
-      send_data.emerg_stop=emerg_stop;
-    }
-    if(published_emerg_stop!=emerg_stop){
-      send_data.emerg_speed_up=emerg_speed_up;
-    }
+
+    send_data.emerg_stop=emerg_stop;
+    send_data.emerg_speed_up=emerg_speed_up;
+
     pub.publish(send_data);
   }
   //callback:
   void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
     float forward_dist=reseved_data->forward_obj.distance;
+    float back_dist=reseved_data->backward_obj.distance;
+
+    //test if the closest object ahead is over or under the threshold
     if (forward_dist <= dist_th){
       emerg_stop=true;
     }
     else{
       emerg_stop=false;
     }
-    float back_dist=reseved_data->backward_obj.distance;
-    if (back_dist <= dist_th){
+    //test if the closest object behind is over or under the threshold
+    if (back_dist <= dist_th && emerg_stop!=true){
       emerg_speed_up=true;
     }
     else{
       emerg_speed_up=false;
     }
-  }
-  void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
-    published_emerg_stop=reseved_data->emerg_stop;
-    published_emerg_speed_up=reseved_data->emerg_speed_up;
   }
 };
 
@@ -60,7 +54,6 @@ int main(int argc, char**argv){
   // plz note that this isnt monitor but a constant verson of thet member
 
   ros::Subscriber sub_closest_object = nh.subscribe("closest_object",100,&emerg_status::callback_closest_obj,&monitor);
-  ros::Subscriber sub_emerg_stop = nh.subscribe("emerg_stop_status",100,&emerg_status::callback_emerg_stop,&monitor);
 
   //initialise the node with an emerg_stop
   while (ros::ok()) {

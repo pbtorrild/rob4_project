@@ -8,8 +8,6 @@
 #include <torrilds_package/SignsFound.h>
 class control_data{
 private:
-  // distance threshold for emerg_stop
-  float dist_th=0.3;
   //distance in pixel to line
   float desired_pix_dist=320;
   // vel
