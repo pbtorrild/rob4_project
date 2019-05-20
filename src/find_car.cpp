@@ -10,6 +10,17 @@
 #include <iostream>
 #include <math.h>
 
+#include <torrilds_package/RoadObj.h>
+bool car_found;
+
+void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
+	//check for changes in emerg_stop status
+	torrilds_package::RoadObj send_data;
+	//threshold for the dot to be inside the view_line of the cam
+	send_data.car_found=car_found;
+	pub.publish(send_data);
+}
+
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
 {
   cv_bridge::CvImagePtr cv_ptr;
@@ -81,8 +92,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
   	}
+    car_found=true;
   }
-
+  else{car_found=false;}
 
   cv::imshow("view_car",input);
   cv::waitKey(10);
@@ -99,7 +111,11 @@ int main(int argc, char **argv)
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
 
-  ros::spin();
+  ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
+  while (ros::ok()) {
+		road_obj_pub(nh,pub);
+		ros::spinOnce();
+	}
 
   cv::destroyWindow("view_car");
 }
