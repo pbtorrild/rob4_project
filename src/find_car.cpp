@@ -16,6 +16,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   try
   {
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+      cv::waitKey(10);
 
   }
   catch (cv_bridge::Exception& e)
@@ -52,39 +53,42 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 	//RETR_EXTERNAL ensures bounding boxes isnt detected inside others
 	//Here we find the Contours around any red lights
 	cv::findContours(img2, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+  if (contours.size()==2) {
+    //Initialize the rectangle array used for storing the Rearlight bounding boxes..
+  	cv::Rect RedLight[2];
 
-	//Initialize the rectangle array used for storing the Rearlight bounding boxes..
-	cv::Rect RedLight[2];
+  	//Saves the Bounding boxes the redlight array.
+  	for (int i = 0; i < contours.size(); i++) {
+  		RedLight[i] = cv::boundingRect(contours[i]);
+  	}
+  	//If the first elements x-value, in Redlight's is less than the second. then the statement runs.
+  	//this is to know the position of the lights in relation to each other
+  	if (RedLight[0].x < RedLight[1].x) {
+  		//The width of the car is equal to the distance between the two rear lights
+  		int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
+  		//initialize the "Width" variable used to mark the cars position with a bounding box.
+  		cv::Point Width = cv::Point(RedLight[0].x, RedLight[0].y - (WidthOfCar / 3));
+  		//Define the oposing corners of the bounding box
+  		cv::Rect CarHere = cv::Rect(Width, cv::Point(Width.x + WidthOfCar + RedLight[1].width, Width.y + WidthOfCar));
+  		//Make the bounding box placed around the car. with the color code of violet~ish and a thichness of 3 pixels
+  		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
+  	}
+  	//Check if the other redlight is on the left side
+  	else {
+  		int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
+  		cv::Point Width = cv::Point(RedLight[1].x, RedLight[1].y - (WidthOfCar / 3));
+  		cv::Rect CarHere = cv::Rect(Width, cv::Point(Width.x + WidthOfCar + RedLight[0].width, Width.y + WidthOfCar));
+  		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
 
-	//Saves the Bounding boxes the redlight array.
-	for (int i = 0; i < contours.size(); i++) {
-		RedLight[i] = cv::boundingRect(contours[i]);
-	}
-	//If the first elements x-value, in Redlight's is less than the second. then the statement runs.
-	//this is to know the position of the lights in relation to each other
-	if (RedLight[0].x < RedLight[1].x) {
-		//The width of the car is equal to the distance between the two rear lights
-		int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
-		//initialize the "Width" variable used to mark the cars position with a bounding box.
-		cv::Point Width = cv::Point(RedLight[0].x, RedLight[0].y - (WidthOfCar / 3));
-		//Define the oposing corners of the bounding box
-		cv::Rect CarHere = cv::Rect(Width, cv::Point(Width.x + WidthOfCar + RedLight[1].width, Width.y + WidthOfCar));
-		//Make the bounding box placed around the car. with the color code of violet~ish and a thichness of 3 pixels
-		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
-	}
-	//Check if the other redlight is on the left side
-	else {
-		int WidthOfCar = abs(RedLight[1].x - RedLight[0].x);
-		cv::Point Width = cv::Point(RedLight[1].x, RedLight[1].y - (WidthOfCar / 3));
-		cv::Rect CarHere = cv::Rect(Width, cv::Point(Width.x + WidthOfCar + RedLight[0].width, Width.y + WidthOfCar));
-		cv::rectangle(input, CarHere, CV_RGB(230, 0, 250), 3);
+  	}
+  }
 
-	}
 
   cv::imshow("view_car",input);
-  cv::waitKey(0);
-  Processing(input);
+  cv::waitKey(10);
+//int  Processing(input);
 }
+
 
 int main(int argc, char **argv)
 {
