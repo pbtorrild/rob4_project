@@ -53,7 +53,7 @@ void find_human(cv::Mat img_re)
 		}
 		//display the results
 		cv::imshow("view_human", img_re);
-    cv::waitKey(0);
+    cv::waitKey(10);
 }
 void imageCallback(const sensor_msgs::ImageConstPtr msg)
 {
@@ -61,7 +61,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   try
   {
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-  }
+		cv::waitKey(10);
+	}
   catch (cv_bridge::Exception& e)
   {
     ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
@@ -73,7 +74,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "image_listene  r");
+  ros::init(argc, argv, "image_listener");
 	ros::NodeHandle nh;
 	cv::namedWindow("view_human");
   cv::startWindowThread();
