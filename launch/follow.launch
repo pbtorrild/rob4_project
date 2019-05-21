@@ -1,0 +1,27 @@
+<launch>
+  <!--Launch the camara-->
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+  </node>
+  <!-- the lidar-->
+  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="frame_id" value="laser"/>
+  </node>
+  <!-- the self made files -->
+  <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen"></node>
+  <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
+  <node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node>
+  <node pkg="torrilds_package" type="follow_line" name="follow_line" output="screen"></node>
+
+  <!--
+  <node pkg="torrilds_package" type="find_human" name="find_human" output="screen"></node>
+  <node pkg="torrilds_package" type="find_car" name="find_car" output="screen"></node> -->
+  <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
+
+</launch>
