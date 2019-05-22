@@ -11,15 +11,27 @@
 #include <torrilds_package/SignsFound.h>
 cv::Mat src, frame;
 
-bool MainSideRoad;
-bool Yield;
-bool Kids;
-bool DontGoLeft;
-bool Seventy;
-bool Thirty;
-bool Fifty;
-bool BothWaysNo;
-bool Cross;
+bool MainSideRoad=false;
+bool Yield=false;
+bool Kids=false;
+bool DontGoLeft=false;
+bool Seventy=false;
+bool Thirty=false;
+bool Fifty=false;
+bool BothWaysNo=false;
+bool Cross=false;
+
+void set_all_false(){
+	bool MainSideRoad=false;
+	bool Yield=false;
+	bool Kids=false;
+	bool DontGoLeft=false;
+	bool Seventy=false;
+	bool Thirty=false;
+	bool Fifty=false;
+	bool BothWaysNo=false;
+	bool Cross=false;
+}
 
 void sign_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
@@ -141,7 +153,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 10) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat triangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/mainsideroad.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/yield.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/kids.png") };
+		cv::Mat triangles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/mainsideroad.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/yield.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/kids.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double triITSratio[] = { 0.345368, 0.516129032, 0.3577405858 };
 		//Index number of each template in an array
@@ -164,7 +176,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 20) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat rectangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/WalkerTemp.png") };
+		cv::Mat rectangles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/WalkerTemp.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double rectITSratio[] = { 0.627659 };
 		//Index number of each template in an array
@@ -187,7 +199,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 30) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat circles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/dontgoleft.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/30.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/50.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/blank.png") };
+		cv::Mat circles[] = { cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/dontgoleft.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/70.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/30.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/50.png"), cv::imread("/home/peter/catkin_ws/src/torrilds_package/src/templates/blank.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double cirITSratio[] = { 0.5091743, 0.5019762, 0.5198776758, 0.5617021277, 0.70472441};
 		//Index number of each template in an array
@@ -217,7 +229,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	//Used to determin wich sign was detected
 	int j = 0;
 	//The for loop will run untill the output from match, matches the i'th element in signIndex
-	for (int i = 0; i < tempimages + 1; i++) {
+	for (int i = 0; i <= tempimages; i++) {
 		// j = i
 		j = i;
 		//Checking if sign matches the i'th element in signIndex
@@ -227,37 +239,46 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 		}
 	}
 	//If j is smaller tempimages (number of elements in signLabel (array containing the string names of detectable signs))
-	if (j < tempimages) {
+	if (j < tempimages+1) {
 		//Calls for setLabel with the image input, the name of the detected sign, and the specific object index number as input
 		//The entire funktion is a placeholder for the output the TurtleBot needs to act on the sign given
 		setLabel(src, signLabel[j], contour);
 
 		switch (sign) {
-			case 111: MainSideRoad = true;
+			case 111: set_all_false();
+								MainSideRoad = true;
 				break;
 
-			case 112: Yield = true;
+			case 112: set_all_false();
+								Yield = true;
 				break;
 
-			case 113: Kids = true;
+			case 113: set_all_false();
+								Kids = true;
 				break;
 
-			case 131: DontGoLeft = true;
+			case 131: set_all_false();
+								DontGoLeft = true;
 				break;
 
-			case 132: Seventy = true;
+			case 132: set_all_false();
+								Seventy = true;
 				break;
 
-			case 133: Thirty = true;
+			case 133: set_all_false();
+								Thirty = true;
 				break;
 
-			case 134: Fifty = true;
+			case 134: set_all_false();
+								Fifty = true;
 				break;
 
-			case 135: BothWaysNo = true;
+			case 135: set_all_false();
+								BothWaysNo = true;
 				break;
 
-			case 221: Cross = true;
+			case 221: set_all_false();
+								Cross = true;
 				break;
 		}
 	}
@@ -365,7 +386,7 @@ void findColour(cv::Mat& im) {
 	// converting from BGR to HSV
 	cvtColor(im, blue, cv::COLOR_BGR2HSV);
 	// Using the inRange funtion to threshold a specific colour
-	inRange(red, cv::Scalar(100, s1, v1), cv::Scalar(140, s2, v2), red);
+	inRange(red, cv::Scalar(100, s1, v1), cv::Scalar(160, s2, v2), red);
 	inRange(blue, cv::Scalar(100, s1, v1), cv::Scalar(140, s2, v2), blue);
 	//Executing the findShapes function with the colour thresholded image and a colour index as an input
 	findShapes(red, 100);
@@ -388,12 +409,12 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   //importing the recieved image as a frame matrix
   src=cv_ptr->image;
   // Specifying a rectangle to be the ROI, and sets the matrix frame to be that
-	frame = src(cv::Rect(src.cols - (src.cols / 3), 0, src.cols / 3, src.rows / 3));
+	cv::Rect ROI=cv::Rect(src.cols - (src.cols / 2), 0, src.cols / 2, src.rows / 2);
+	frame = src(ROI);
 	//Executes the findColour function, with frame as input
 	findColour(frame);
 	// Shows frame and src after being processed
 	//imshow("frame", frame);
-	cv::Rect ROI=cv::Rect(src.cols - (src.cols / 3), 0, src.cols / 3, src.rows / 3);
 	cv::rectangle(src, ROI, cv::Scalar(255, 255, 255), 2, 8, 0);
 	imshow("view_signs", src);
 	//waits x amounts of millisecond before next runthrough of the for loop
@@ -412,7 +433,7 @@ int main(int argc, char **argv)
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
 
-	ros::Rate rate(15.);
+	ros::Rate rate(30.);
 	while (ros::ok()) {
 		sign_pub(nh,pub);
 		rate.sleep();

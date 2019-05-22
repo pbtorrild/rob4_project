@@ -13,6 +13,7 @@ class control_data{
 private:
   //distance in pixel to line
   float desired_pix_dist=320;
+  double angular_vel;
   // vel
   float vel_30=0.01;
   float std_vel =0.03;
@@ -49,7 +50,6 @@ protected:
 public:
   //funcktions below
   double get_angular_vel(double distance_in){
-    double angular_vel;
     //computiation
     double dist_2l_error=distance_in-desired_pix_dist;
     ROS_INFO("Error: %f",dist_2l_error);
@@ -91,9 +91,9 @@ public:
         send_data.linear.x=0;
         send_data.angular.z=get_angular_vel(line_dist_px);
       }
-      if (car==true || safe_left_turn!=true || safe_right_turn!=true && Yield==true) {
+      if (safe_left_turn!=true && safe_right_turn!=true && Yield==true) {
         send_data.linear.x=0;
-        send_data.angular.z=get_angular_vel(line_dist_px);
+        send_data.angular.z=0;
       }
 
     }
