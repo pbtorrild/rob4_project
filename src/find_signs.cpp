@@ -374,7 +374,7 @@ void findColour(cv::Mat& im) {
 
 	int s1 = 0.60 * 255;
 	int s2 = 1.00 * 255;
-	int v1 = 0.36 * 255;
+	int v1 = 0.20 * 255;
 	int v2 = 0.85 * 255;
 
 	/*
