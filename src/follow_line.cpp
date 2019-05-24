@@ -110,7 +110,7 @@ int main(int argc, char **argv)
   cv::namedWindow("view_line");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub = it.subscribe("/usb_cam/road_cam/image_raw", 1, imageCallback);
 
 	while (ros::ok()) {
 		line_pub(nh,pub);
