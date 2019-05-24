@@ -409,7 +409,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
   //importing the recieved image as a frame matrix
   src=cv_ptr->image;
   // Specifying a rectangle to be the ROI, and sets the matrix frame to be that
-	cv::Rect ROI=cv::Rect(src.cols - (src.cols / 2), 0, src.cols / 2, src.rows / 2);
+	cv::Rect ROI=cv::Rect(src.cols - (src.cols), 0, src.cols, src.rows);
 	frame = src(ROI);
 	//Executes the findColour function, with frame as input
 	findColour(frame);
