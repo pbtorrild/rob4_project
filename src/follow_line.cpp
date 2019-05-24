@@ -38,7 +38,7 @@ double Lines(cv::Mat& im) {
 	float sumx = 0;
 	int g = 0;
 	double trackx;
-	int yvalue = threshold1.rows;
+	int yvalue = threshold1.rows/2;
 
 	//checks top row on cutout picture from original full framme, to check different row on cutout picture, change the "yvalue" line up
 	//checks if the line is present on each pixel from the thresholded picture, if yes adds the distance from left corner to that pixel
