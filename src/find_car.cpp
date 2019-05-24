@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 	cv::namedWindow("view_car");
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub = it.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
 
   ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
   while (ros::ok()) {
