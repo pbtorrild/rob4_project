@@ -21,10 +21,10 @@ public:
     pub.publish(send_data);
   }
   //callback:
-  void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& reseved_data){
-    float forward_dist=reseved_data->forward_obj.distance;
-    float back_dist=reseved_data->backward_obj.distance;
-    scan_time=reseved_data->scan_time;
+  void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& received_data){
+    float forward_dist=received_data->forward_obj.distance;
+    float back_dist=received_data->backward_obj.distance;
+    scan_time=received_data->scan_time;
     //test if the closest object ahead is over or under the threshold
     if (forward_dist <= dist_th){
       emerg_stop=true;

@@ -114,24 +114,24 @@ public:
     ros::spinOnce();
   }
   //callback:
-  void callback_signs_found(const torrilds_package::SignsFound::ConstPtr& reseved_data){
-    MainSideRoad=reseved_data->MainSideRoad;
-    Yield=reseved_data->Yield;
-    Kids=reseved_data->Kids;
-    DontGoLeft=reseved_data->DontGoLeft;
-    Seventy=reseved_data->Seventy;
-    Thirty=reseved_data->Thirty;
-    Fifty=reseved_data->Fifty;
-    BothWaysNo=reseved_data->BothWaysNo;
-    Cross=reseved_data->Cross;
+  void callback_signs_found(const torrilds_package::SignsFound::ConstPtr& received_data){
+    MainSideRoad=received_data->MainSideRoad;
+    Yield=received_data->Yield;
+    Kids=received_data->Kids;
+    DontGoLeft=received_data->DontGoLeft;
+    Seventy=received_data->Seventy;
+    Thirty=received_data->Thirty;
+    Fifty=received_data->Fifty;
+    BothWaysNo=received_data->BothWaysNo;
+    Cross=received_data->Cross;
 
   }
-  void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& reseved_data){
-    emerg_stop=reseved_data->emerg_stop;
-    emerg_speed_up=reseved_data->emerg_speed_up;
+  void callback_emerg_stop(const torrilds_package::EmergStop::ConstPtr& received_data){
+    emerg_stop=received_data->emerg_stop;
+    emerg_speed_up=received_data->emerg_speed_up;
   }
-  void callback_road_change(const torrilds_package::LineDist::ConstPtr& reseved_data){
-    line_dist_px=reseved_data->line_dist;
+  void callback_road_change(const torrilds_package::LineDist::ConstPtr& received_data){
+    line_dist_px=received_data->line_dist;
   }
   void callback_lidar_data(const sensor_msgs::LaserScan::ConstPtr& msg){
     //extracting information on the sensor message
@@ -175,9 +175,9 @@ public:
     }
     else{safe_right_turn=false;}
   }
-  void callback_road_obj(const torrilds_package::RoadObj::ConstPtr& reseved_data) {
-    human=reseved_data->human_found;
-    car=reseved_data->car_found;
+  void callback_road_obj(const torrilds_package::RoadObj::ConstPtr& received_data) {
+    human=received_data->human_found;
+    car=received_data->car_found;
   }
 };
 
