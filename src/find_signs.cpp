@@ -22,15 +22,15 @@ bool BothWaysNo=false;
 bool Cross=false;
 
 void set_all_false(){
-	bool MainSideRoad=false;
-	bool Yield=false;
-	bool Kids=false;
-	bool DontGoLeft=false;
-	bool Seventy=false;
-	bool Thirty=false;
-	bool Fifty=false;
-	bool BothWaysNo=false;
-	bool Cross=false;
+	MainSideRoad=false;
+	Yield=false;
+	Kids=false;
+	DontGoLeft=false;
+	Seventy=false;
+	Thirty=false;
+	Fifty=false;
+	BothWaysNo=false;
+	Cross=false;
 }
 
 void sign_pub(ros::NodeHandle nh,ros::Publisher pub){
