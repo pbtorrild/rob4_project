@@ -21,22 +21,19 @@ void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
 	pub.publish(send_data);
 }
 
-void imageCallback(const sensor_msgs::ImageConstPtr msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
-  cv_bridge::CvImagePtr cv_ptr;
+	cv::Mat input;
   try
   {
-    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-      cv::waitKey(10);
+    input = cv::imdecode(cv::Mat(msg->data),1);//convert compressed image data to cv::Mat
 
   }
   catch (cv_bridge::Exception& e)
   {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("Could not convert to image!");
   }
-  cv::Mat input = cv_ptr->image;
-
-  //initializing the imiges used for the processing stages
+	//initializing the imiges used for the processing stages
   cv::Mat img2, morph1, img;
 	//As we want to look for the colour red, and we need the location of the range on the color wheel to be positive angles,
 	//we invert the colour wheel by changing the location of red to blues position, and converting it to hsv
@@ -108,9 +105,8 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	cv::namedWindow("view_car");
   cv::startWindowThread();
-  image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam_1/main_cam/image_raw/", 1, imageCallback);
-
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
+	
   ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
   while (ros::ok()) {
 		road_obj_pub(nh,pub);

@@ -393,21 +393,17 @@ void findColour(cv::Mat& im) {
 	findShapes(blue, 200);
 
 }
-void imageCallback(const sensor_msgs::ImageConstPtr msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
-  cv_bridge::CvImagePtr cv_ptr;
-  try
+	try
   {
-    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    cv::waitKey(30);
+    src = cv::imdecode(cv::Mat(msg->data),1);//convert compressed image data to cv::Mat
+
   }
   catch (cv_bridge::Exception& e)
   {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("Could not convert to image!");
   }
-  //image pros
-  //importing the recieved image as a frame matrix
-  src=cv_ptr->image;
   // Specifying a rectangle to be the ROI, and sets the matrix frame to be that
 	cv::Rect ROI=cv::Rect(src.cols - (src.cols), 0, src.cols, src.rows);
 	frame = src(ROI);
@@ -430,8 +426,7 @@ int main(int argc, char **argv)
 
   cv::namedWindow("view_signs");
   cv::startWindowThread();
-  image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
 	ros::Rate rate(30.);
 	while (ros::ok()) {

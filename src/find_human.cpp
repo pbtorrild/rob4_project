@@ -70,21 +70,19 @@ void find_human(cv::Mat img_re)
 	cv::imshow("view_human", img_re);
   cv::waitKey(10);
 }
-void imageCallback(const sensor_msgs::ImageConstPtr msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
-  cv_bridge::CvImagePtr cv_ptr;
+	cv::Mat input;
   try
   {
-    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-		cv::waitKey(10);
-	}
+    input = cv::imdecode(cv::Mat(msg->data),1);//convert compressed image data to cv::Mat
+
+  }
   catch (cv_bridge::Exception& e)
   {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("Could not convert to image!");
   }
-  //image pros
-  cv::Mat input = cv_ptr->image;
-  find_human(input);
+	find_human(input);
 }
 
 int main(int argc, char **argv)
@@ -93,9 +91,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	cv::namedWindow("view_human");
   cv::startWindowThread();
-  image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
-
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 	ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
   while (ros::ok()) {
 		road_obj_pub(nh,pub);

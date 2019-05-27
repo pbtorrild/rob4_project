@@ -1,15 +1,12 @@
 #include <ros/ros.h>
+
 #include <iostream>
 #include <cmath>
-
-#include "sensor_msgs/image_encodings.h"
-#include <image_transport/image_transport.h>
 #include <torrilds_package/LineDist.h>
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
-
 cv::Mat input, frame, threshold1;
 double distance_in;
 void line_pub(ros::NodeHandle nh,ros::Publisher pub){
@@ -57,24 +54,18 @@ double Lines(cv::Mat& im) {
 	return trackx;
 }
 
-
-void imageCallback(const sensor_msgs::ImageConstPtr msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
-  cv::Mat threshold1;
-  cv_bridge::CvImagePtr cv_ptr;
+	cv::Mat input;
   try
   {
-    cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    input = cv::imdecode(cv::Mat(msg->data),1);//convert compressed image data to cv::Mat
+
   }
   catch (cv_bridge::Exception& e)
   {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("Could not convert to image!");
   }
-  //image pros
-  input = cv_ptr->image;
-  // here you select the area you want to chceck for finding the line, be carefull, when selecting the entire image,
-  //then it will check only the top row later in algorythm,
-  //to change that change the y-value, unit vector of y points down from top left corner btw
 	cv::Rect inputRect = cv::Rect(0, (input.rows * 2) / 3, input.cols, input.rows / 3);
 
 	//cuts out the desired area
@@ -100,23 +91,21 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg)
 
 	distance_in=distance;
 }
-
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
-	ros::NodeHandle nh;
+  ros::NodeHandle nh;
 	ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 1);
 
   cv::namedWindow("view_line");
   cv::startWindowThread();
-  image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("/usb_cam_2/road_cam/image_raw", 1, imageCallback);
+  ros::Subscriber sub = nh.subscribe("/usb_cam_2/road_cam/image_raw/compressed", 1, imageCallback);
 
-	while (ros::ok()) {
-		line_pub(nh,pub);
-		ros::spinOnce();
-	}
 
+		while (ros::ok()) {
+			line_pub(nh,pub);
+			ros::spinOnce();
+		}
 
   cv::destroyWindow("view_line");
 }
