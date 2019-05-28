@@ -41,7 +41,7 @@ void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 	//img is input, img2 is output.
 	cvtColor(input, img2, cv::COLOR_RGB2HSV);
 	//here we initialize the variables to be used later. s=saturation, v=value
-	int s1 = 0.35 * 255, s2 = 0.75 * 255, v1 = 0.45 * 255, v2 = 1 * 255;
+	int s1 = 0.35 * 255, s2 = 0.75 * 255, v1 = 0.20 * 255, v2 = 1 * 255;
 	//inRange Thresholds for any color value inrange of the two points specified.
 	//Scalar(Hue,Saturation,Value)
 	inRange(img2, cv::Scalar(110, s1, v1), cv::Scalar(140, s2, v2), img2);
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 	cv::namedWindow("view_car");
   cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
-	
+
   ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
   while (ros::ok()) {
 		road_obj_pub(nh,pub);

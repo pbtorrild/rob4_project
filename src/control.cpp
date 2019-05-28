@@ -55,7 +55,7 @@ public:
     ROS_INFO("Error: %f",dist_2l_error);
 
       //we determine k by taking the maximum wanted angular vel and diviting it by the maximum error
-      float k= 0.9*0.003125; //A_vel_max/e_max , A_vel_max=0.5 & e_max=320
+      float k= 0.8*0.003125; //A_vel_max/e_max , A_vel_max=0.5 & e_max=320
       if(dist_2l_error!=-320){
         angular_vel=-dist_2l_error*k;
       }
@@ -75,6 +75,9 @@ public:
       }
       if (Fifty==true) {
         send_data.linear.x=vel_50;
+      }
+      if (Thirty==true) {
+        send_data.linear.x=vel_30;
       }
       if (emerg_speed_up==true) {
         send_data.linear.x=speed_up_vel;

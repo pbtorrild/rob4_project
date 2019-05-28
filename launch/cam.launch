@@ -8,7 +8,7 @@
     <param name="camera_frame_id" value="yuyv" />
     <param name="io_method" value="mmap"/>
     <param name="framerate" value="15" />
-    <param name="autofocus" value="false" />
+    <param name="autofocus" value="true" />
   </node>
 </group>
 
@@ -21,7 +21,7 @@
     <param name="camera_frame_id" value="yuyv" />
     <param name="io_method" value="mmap"/>
     <param name="framerate" value="15" />
-    <param name="autofocus" value="false" />
+    <param name="autofocus" value="true" />
   </node>
 </group>
 </launch>
