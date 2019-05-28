@@ -1,4 +1,5 @@
 <launch>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot_core.launch"/>
   <!--Launch the cameras-->
   <include file="$(find torrilds_package)/launch/cam.launch"/>
   <!-- the lidar-->
