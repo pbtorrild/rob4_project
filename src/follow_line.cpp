@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <cmath>
-#include <torrilds_package/LineDist.h>
+#include <rob4_pkg/LineDist.h>
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -11,7 +11,7 @@ cv::Mat input, frame, threshold1;
 double distance_in;
 void line_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
-	torrilds_package::LineDist send_data;
+	rob4_pkg::LineDist send_data;
 	//threshold for the dot to be inside the view_line of the cam
 	if (distance_in>=0&&distance_in<=640) {
 		send_data.line_dist=distance_in;
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
-	ros::Publisher pub = nh.advertise<torrilds_package::LineDist>("line_dist", 1);
+	ros::Publisher pub = nh.advertise<rob4_pkg::LineDist>("line_dist", 1);
 
   cv::namedWindow("view_line");
   cv::startWindowThread();

@@ -21,7 +21,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr msg){
   //image pros
   cv::Mat input = cv_ptr->image;
 
-	std::string file_path="/home/ros/catkin_ws/src/torrilds_package/src/templates";
+	std::string file_path="/home/ros/catkin_ws/src/rob4_pkg/src/templates";
 	std::string file_name="train_data_";
 	std::string file_number=std::to_string(file_num);
 	std::string file_type=".jpg";
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
   cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   //image_transport::Subscriber sub = it.subscribe("camera/color/image_raw", 1, imageCallback);
-	cv::Mat test=cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/test.jpg", CV_LOAD_IMAGE_COLOR);
+	cv::Mat test=cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/test.jpg", CV_LOAD_IMAGE_COLOR);
 	cv::imshow("view",test);
 	cv::waitKey();
 	ros::spin();

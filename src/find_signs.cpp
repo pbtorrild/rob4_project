@@ -8,7 +8,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
 
-#include <torrilds_package/SignsFound.h>
+#include <rob4_pkg/SignsFound.h>
 cv::Mat src, frame;
 
 bool MainSideRoad=false;
@@ -35,7 +35,7 @@ void set_all_false(){
 
 void sign_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
-	torrilds_package::SignsFound send_data;
+	rob4_pkg::SignsFound send_data;
 	send_data.MainSideRoad=MainSideRoad;
 	send_data.Yield=Yield;
 	send_data.Kids=Kids;
@@ -153,7 +153,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 10) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat triangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/mainsideroad.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/yield.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/kids.png") };
+		cv::Mat triangles[] = { cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/mainsideroad.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/yield.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/kids.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double triITSratio[] = { 0.345368, 0.516129032, 0.3577405858 };
 		//Index number of each template in an array
@@ -176,7 +176,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 20) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat rectangles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/WalkerTemp.png") };
+		cv::Mat rectangles[] = { cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/WalkerTemp.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double rectITSratio[] = { 0.627659 };
 		//Index number of each template in an array
@@ -199,7 +199,7 @@ void inside(cv::Rect sqr, int shapetype, int colourshape, std::vector<cv::Point>
 	if (shapetype == 30) {
 
 		//Array containing the paths to all the templates, it is important they are in order
-		cv::Mat circles[] = { cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/dontgoleft.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/70.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/30.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/50.png"), cv::imread("/home/ros/catkin_ws/src/torrilds_package/src/templates/blank.png") };
+		cv::Mat circles[] = { cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/dontgoleft.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/70.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/30.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/50.png"), cv::imread("/home/ros/catkin_ws/src/rob4_pkg/src/templates/blank.png") };
 		//Array containg the ratio between the sign and the image insige it, this is used to scale the template later
 		double cirITSratio[] = { 0.5091743, 0.5019762, 0.5198776758, 0.5617021277, 0.70472441};
 		//Index number of each template in an array
@@ -421,7 +421,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
-	ros::Publisher pub = nh.advertise<torrilds_package::SignsFound>("signs_found", 1);
+	ros::Publisher pub = nh.advertise<rob4_pkg::SignsFound>("signs_found", 1);
 
 
   cv::namedWindow("view_signs");

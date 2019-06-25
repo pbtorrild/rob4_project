@@ -1,7 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/Float32MultiArray.h" //must be included since the data from the LaserScan is a Float32MultiArray
 #include "sensor_msgs/LaserScan.h"
-#include "torrilds_package/ClosestObj.h"
+#include "rob4_pkg/ClosestObj.h"
 
 class lidar_info{
 public:
@@ -48,7 +48,7 @@ public:
       }
     }
     //publish the closest opbject
-    torrilds_package::ClosestObj send_data;
+    rob4_pkg::ClosestObj send_data;
     //forward object
     send_data.forward_obj.obj_found=true;
 
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
   //initialize subsciber
   ros::init(argc, argv, "laser_info");
   ros::NodeHandle n;
-  ros::Publisher closest_obj=n.advertise<torrilds_package::ClosestObj>("closest_object",1);
+  ros::Publisher closest_obj=n.advertise<rob4_pkg::ClosestObj>("closest_object",1);
   lidar_info monitor(closest_obj);
   //sibscribe to the scan topic and go to the function above
   ros::Subscriber sub = n.subscribe("scan", 1, &lidar_info::callback_lidar_data,&monitor);

@@ -10,12 +10,12 @@
 #include <iostream>
 #include <math.h>
 
-#include <torrilds_package/RoadObj.h>
+#include <rob4_pkg/RoadObj.h>
 bool car_found;
 
 void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
-	torrilds_package::RoadObj send_data;
+	rob4_pkg::RoadObj send_data;
 	//threshold for the dot to be inside the view_line of the cam
 	send_data.car_found=car_found;
 	pub.publish(send_data);
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
   cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
-  ros::Publisher pub = nh.advertise<torrilds_package::RoadObj>("road_obj", 1);
+  ros::Publisher pub = nh.advertise<rob4_pkg::RoadObj>("road_obj", 1);
   while (ros::ok()) {
 		road_obj_pub(nh,pub);
 		ros::spinOnce();

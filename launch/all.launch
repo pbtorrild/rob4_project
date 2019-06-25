@@ -1,10 +1,11 @@
 <launch>
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot_core.launch"/>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch"/>
   <!--Launch the cameras-->
   <include file="$(find torrilds_package)/launch/cam.launch"/>
   <!-- the lidar-->
   <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
-    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="port" value="
+      /dev/ttyUSB0"/>
     <param name="frame_id" value="laser"/>
   </node>
   <!-- the self made files -->
@@ -16,4 +17,4 @@
   <node pkg="torrilds_package" type="find_car" name="find_car" output="screen"></node>
   <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
 
-</launch>
+</launch>''

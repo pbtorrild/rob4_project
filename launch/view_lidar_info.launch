@@ -4,7 +4,7 @@
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="frame_id" value="laser"/>
   </node>
-  <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen">  </node>
+  <node pkg="rob4_pkg" type="lidar_info" name="lidar_info" output="screen">  </node>
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find torrilds_package)/rviz/lidar_info.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rob4_pkg)/rviz/lidar_info.rviz" />
 </launch>

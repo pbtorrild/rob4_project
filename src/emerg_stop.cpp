@@ -1,6 +1,6 @@
 #include <ros/ros.h>
-#include <torrilds_package/ClosestObj.h>
-#include <torrilds_package/EmergStop.h>
+#include <rob4_pkg/ClosestObj.h>
+#include <rob4_pkg/EmergStop.h>
 class emerg_status{
 private:
   // distance threshold
@@ -13,7 +13,7 @@ public:
   //funcktions below
   void emerg_pub(ros::NodeHandle nh,ros::Publisher pub){
     //check for changes in emerg_stop status
-    torrilds_package::EmergStop send_data;
+    rob4_pkg::EmergStop send_data;
 
     send_data.emerg_stop=emerg_stop;
     send_data.emerg_speed_up=emerg_speed_up;
@@ -21,7 +21,7 @@ public:
     pub.publish(send_data);
   }
   //callback:
-  void callback_closest_obj(const torrilds_package::ClosestObj::ConstPtr& received_data){
+  void callback_closest_obj(const rob4_pkg::ClosestObj::ConstPtr& received_data){
     float forward_dist=received_data->forward_obj.distance;
     float back_dist=received_data->backward_obj.distance;
     scan_time=received_data->scan_time;
@@ -47,7 +47,7 @@ int main(int argc, char**argv){
   ros::init(argc, argv, "emerg_stop");
   ros::NodeHandle nh;
   //define publisher
-  ros::Publisher pub = nh.advertise<torrilds_package::EmergStop>("emerg_stop_status", 1);
+  ros::Publisher pub = nh.advertise<rob4_pkg::EmergStop>("emerg_stop_status", 1);
   //set class member
   emerg_status monitor;
   //subscribe to the topic closest_object with que size 100 and
