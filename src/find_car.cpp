@@ -11,7 +11,7 @@
 #include <math.h>
 
 #include <rob4_pkg/RoadObj.h>
-bool car_found;/
+bool car_found;
 
 void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "image_listener");
 	ros::NodeHandle nh;
 	//cv::namedWindow("view_car");
-  cv::startWindowThread();
+  //cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
   ros::Publisher pub = nh.advertise<rob4_pkg::RoadObj>("road_obj", 1);
