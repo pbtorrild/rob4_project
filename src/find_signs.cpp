@@ -412,9 +412,9 @@ void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 	// Shows frame and src after being processed
 	//imshow("frame", frame);
 	cv::rectangle(src, ROI, cv::Scalar(255, 255, 255), 2, 8, 0);
-	imshow("view_signs", src);
+	//imshow("view_signs", src);
 	//waits x amounts of millisecond before next runthrough of the for loop
-	cv::waitKey(1);
+	//cv::waitKey(1);
 }
 
 int main(int argc, char **argv)
@@ -424,8 +424,8 @@ int main(int argc, char **argv)
 	ros::Publisher pub = nh.advertise<rob4_pkg::SignsFound>("signs_found", 1);
 
 
-  cv::namedWindow("view_signs");
-  cv::startWindowThread();
+  //cv::namedWindow("view_signs");
+  //cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
 	ros::Rate rate(30.);
@@ -435,5 +435,5 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 	}
 
-  cv::destroyWindow("view_signs");
+  //cv::destroyWindow("view_signs");
 }

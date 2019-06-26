@@ -11,7 +11,7 @@
 #include <math.h>
 
 #include <rob4_pkg/RoadObj.h>
-bool car_found;
+bool car_found;/
 
 void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
 	//check for changes in emerg_stop status
@@ -93,8 +93,8 @@ void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
   }
   else{car_found=false;}
 
-  cv::imshow("view_car",input);
-  cv::waitKey(10);
+  //cv::imshow("view_car",input);
+  //cv::waitKey(10);
 //int  Processing(input);
 }
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
 	ros::NodeHandle nh;
-	cv::namedWindow("view_car");
+	//cv::namedWindow("view_car");
   cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
@@ -113,5 +113,5 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 	}
 
-  cv::destroyWindow("view_car");
+  //cv::destroyWindow("view_car");
 }

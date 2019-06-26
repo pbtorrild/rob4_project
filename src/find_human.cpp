@@ -67,8 +67,8 @@ void find_human(cv::Mat img_re)
 		cv::rectangle(img_re, r.tl(), r.br(), cv::Scalar(0, 255, 0), 2);
 	}
 	//display the results
-	cv::imshow("view_human", img_re);
-  cv::waitKey(10);
+	//cv::imshow("view_human", img_re);
+  //cv::waitKey(10);
 }
 void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
@@ -89,8 +89,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_listener");
 	ros::NodeHandle nh;
-	cv::namedWindow("view_human");
-  cv::startWindowThread();
+	//cv::namedWindow("view_human");
+  //cv::startWindowThread();
 	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 	ros::Publisher pub = nh.advertise<rob4_pkg::RoadObj>("road_obj", 1);
   while (ros::ok()) {
@@ -98,5 +98,5 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 	}
 
-  cv::destroyWindow("view_human");
+  //cv::destroyWindow("view_human");
 }

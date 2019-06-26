@@ -86,8 +86,8 @@ void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 
 
 	 //shows the original img with the dot on top of the line hopefully
-	cv::imshow("view_line", input);
-  cv::waitKey(30);
+	//cv::imshow("view_line", input);
+  //cv::waitKey(30);
 
 	distance_in=distance;
 }
@@ -97,8 +97,8 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
 	ros::Publisher pub = nh.advertise<rob4_pkg::LineDist>("line_dist", 1);
 
-  cv::namedWindow("view_line");
-  cv::startWindowThread();
+  //cv::namedWindow("view_line");
+  //cv::startWindowThread();
   ros::Subscriber sub = nh.subscribe("/usb_cam_2/road_cam/image_raw/compressed", 1, imageCallback);
 
 
@@ -107,5 +107,5 @@ int main(int argc, char **argv)
 			ros::spinOnce();
 		}
 
-  cv::destroyWindow("view_line");
+  //cv::destroyWindow("view_line");
 }
