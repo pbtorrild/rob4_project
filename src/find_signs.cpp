@@ -393,7 +393,7 @@ void findColour(cv::Mat& im) {
 	findShapes(blue, 200);
 
 }
-void imageCallback(const sensor_msgs::ImageConstPtr& msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
 	try
   {
@@ -426,7 +426,7 @@ int main(int argc, char **argv)
 
   //cv::namedWindow("view_signs");
   //cv::startWindowThread();
-	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 
 	ros::Rate rate(30.);
 	while (ros::ok()) {

@@ -70,7 +70,7 @@ void find_human(cv::Mat img_re)
 	//cv::imshow("view_human", img_re);
   //cv::waitKey(10);
 }
-void imageCallback(const sensor_msgs::ImageConstPtr& msg)
+void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
 {
 	cv::Mat input;
   try
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	//cv::namedWindow("view_human");
   //cv::startWindowThread();
-	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
 	ros::Publisher pub = nh.advertise<rob4_pkg::RoadObj>("road_obj", 1);
   while (ros::ok()) {
 		road_obj_pub(nh,pub);
