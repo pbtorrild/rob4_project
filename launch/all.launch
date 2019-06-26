@@ -1,7 +1,7 @@
 <launch>
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch"/>
   <!--Launch the cameras-->
-  <include file="$(find torrilds_package)/launch/cam.launch"/>
+  <include file="$(find rob4_pkg)/launch/cam.launch"/>
   <!-- the lidar-->
   <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
     <param name="port" value="
@@ -9,12 +9,12 @@
     <param name="frame_id" value="laser"/>
   </node>
   <!-- the self made files -->
-  <node pkg="torrilds_package" type="lidar_info" name="lidar_info" output="screen"></node>
-  <node pkg="torrilds_package" type="emerg_stop" name="emerg_stop" output="screen"></node>
-  <node pkg="torrilds_package" type="find_signs" name="find_signs" output="screen"></node>
-  <node pkg="torrilds_package" type="follow_line" name="follow_line" output="screen"></node>
-  <node pkg="torrilds_package" type="find_human" name="find_human" output="screen"></node>
-  <node pkg="torrilds_package" type="find_car" name="find_car" output="screen"></node>
-  <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
+  <node pkg="rob4_pkg" type="lidar_info" name="lidar_info" output="screen"></node>
+  <node pkg="rob4_pkg" type="emerg_stop" name="emerg_stop" output="screen"></node>
+  <node pkg="rob4_pkg" type="find_signs" name="find_signs" output="screen"></node>
+  <node pkg="rob4_pkg" type="follow_line" name="follow_line" output="screen"></node>
+  <node pkg="rob4_pkg" type="find_human" name="find_human" output="screen"></node>
+  <node pkg="rob4_pkg" type="find_car" name="find_car" output="screen"></node>
+  <node pkg="rob4_pkg" type="control" name="control" output="screen"></node>
 
 </launch>
