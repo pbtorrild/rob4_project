@@ -17,4 +17,4 @@
   <node pkg="torrilds_package" type="find_car" name="find_car" output="screen"></node>
   <node pkg="torrilds_package" type="control" name="control" output="screen"></node>
 
-</launch>''
+</launch>
