@@ -21,7 +21,7 @@ void road_obj_pub(ros::NodeHandle nh,ros::Publisher pub){
 	pub.publish(send_data);
 }
 
-void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
+void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
 	cv::Mat input;
   try
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	//cv::namedWindow("view_car");
   //cv::startWindowThread();
-	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw/compressed", 1, imageCallback);
+	ros::Subscriber sub = nh.subscribe("/usb_cam_1/main_cam/image_raw", 1, imageCallback);
 
   ros::Publisher pub = nh.advertise<rob4_pkg::RoadObj>("road_obj", 1);
   while (ros::ok()) {

@@ -54,7 +54,7 @@ double Lines(cv::Mat& im) {
 	return trackx;
 }
 
-void imageCallback(const sensor_msgs::CompressedImageConstPtr& msg)
+void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
 	cv::Mat input;
   try
@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 
   //cv::namedWindow("view_line");
   //cv::startWindowThread();
-  ros::Subscriber sub = nh.subscribe("/usb_cam_2/road_cam/image_raw/compressed", 1, imageCallback);
+  ros::Subscriber sub = nh.subscribe("/usb_cam_2/road_cam/image_raw", 1, imageCallback);
 
 
 		while (ros::ok()) {
